@@ -1,0 +1,34 @@
+<% 
+const navmenu = [
+    {'name': 'Home', 'link': '/'},
+    {'name': 'Products', 'link': '/products'},
+    {'name': 'Cart', 'link': '/cart',level:1},
+    {'name': 'Orders', 'link': '/orders',level:1},
+    {'name': 'Add Product', 'link': '/admin/add-book',level:1},
+//    {'name': 'Admin Products', 'link': '/admin/products',level:1}
+];
+
+var path=page.path||path||'/';
+%>
+
+<header class="main-header">
+    <nav>
+        <ul class="nav_menu">
+            <% navmenu.filter(item=>{
+                return !item.level||item.level<=userLevel;
+            }).forEach(item=>{ %>
+                <li><a class="navi<%=item.link===path?' active':''%>" href="<%= item.link %>"><%= item.name %></a></li><% }); %>
+        </ul>
+    </nav>
+    <div class="auth">
+        <% if(userLevel > 0) {%> 
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit">Log Out</button>
+            </form>
+        <%} else {%>
+            <a href="/signup">Sign Up</a>
+            <a href="/login">Log In</a>
+        <%}%>
+    </div>
+</header>

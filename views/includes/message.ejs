@@ -1,0 +1,13 @@
+<% if(page.message){ 
+    if(!Array.isArray(page.message)){ %>
+<div class="message <%=page.message.class||''%>">
+    <%=page.message.text%>
+</div>
+<%  } else if(page.message.length>0) {
+    %>
+    <div class="message error">
+        <%- page.message.filter((m)=>{return m.class=='error';}).map((m)=>{return `<p>${m.text}</p>`;}).join('\n')
+        %>
+    </div>
+<%  }
+} %>

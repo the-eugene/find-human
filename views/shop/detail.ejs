@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs'); %>
+<body>
+    <%- include('../includes/nav.ejs'); %>
+    
+<main>
+    <%- include('../includes/message.ejs'); %>
+    <% if(book._id){%>
+    <article class="product detail">
+        <img src="<%=book.image%>" alt="Image of <%=book.title%>">
+        <div class="book_info">
+            <h2 class="book_title"><%=book.title%></h2>
+            <h3 class="book_subtitle"><%=book.subtitle%></h3>
+            <div class="book_author"><%=book.author%></div> 
+            <div class="book_price">$<%=book.price.toFixed(2)%></div>
+            <div class="book_description"><%=book.description%></div>
+        </div>
+        <% if(userLevel>0 && book.isOwner) { %>
+            <a href="/admin/edit-book/<%=book.isbn%>" class="button">Edit Book</a>
+        <% } else if(!book.isOwner){%>
+            <div class="note">For editing you must be logged in as the book's owner</div>
+        <%} %>
+    </article>
+    <%} else {%>
+        <div class="error"><h2>No book found</h2></div>
+    <%}%>
+</main>
+</body>
+</html>

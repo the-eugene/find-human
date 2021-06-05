@@ -1,0 +1,36 @@
+{
+    "crust":[
+        ["regular", 10],
+        ["thin", 10],
+        ["chicago", 12]
+    ],
+    "sauce":[
+        ["original",2],
+        ["BBQ",3],
+        ["alfredo",3],
+        ["pesto", 4],
+        ["thai chili", 2]
+    ],
+    "toppings":[
+        "pepperoni",
+        "four cheese",
+        "mozzarella cheese",
+        "bacon",
+        "beef",
+        "sausage",
+        "mushrooms",
+        "italian sausage",
+        "black olives",
+        "chicken",
+        "pineapple",
+        "ham",
+        "jalapenos",
+        "green peppers",
+        "canadian bacon",
+        "diced white onions",
+        "cheddar cheese",
+        "diced tomatoes",
+        "alredo sauce",
+        "onions"
+  ]
+}

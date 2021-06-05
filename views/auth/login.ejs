@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs'); %>
+<body>
+    <%- include('../includes/nav.ejs'); %>
+    <main>
+        <%- include('../includes/message.ejs'); %>
+        <form class="login-form" action="/login" method="POST">
+            <div class="formline">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="<%=page.data&&page.data.email||''%>">
+            </div>
+            <div class="formline">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="button" type="submit">Login</button>
+        </form>
+    </main>
+</body>
+</html>

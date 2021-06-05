@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An issue has occured</title>
+    <link rel="stylesheet" href="/css/httpcodes.css">
+</head>
+<body class="loading">
+    <main>
+          <h1>500</h1>
+          <h2>Things fall apart.<br>The center cannot hold.<br>
+            <%= path %><br> is having a bad server day
+            <br>Get well soon server!</h2>
+            <div class="home"><a href="/">Go Home</a></div>
+          <div class="gears">
+            <div class="gear one">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+            <div class="gear two">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+            <div class="gear three">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+          </div>
+</main>
+<script>
+    setTimeout(()=>{
+        for (const e of document.getElementsByClassName('loading')) {
+            e.classList.remove('loading');
+        }
+    }, 1500);
+</script>
+</body>
+</html>

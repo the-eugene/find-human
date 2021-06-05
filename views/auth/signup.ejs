@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs'); %>
+<body>
+    <%- include('../includes/nav.ejs'); %>
+    <main>
+        <%- include('../includes/message.ejs'); %>
+        <form class="login-form" action="/signup" method="POST">
+            <div class="formline">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="<%=page.data.name%>">
+            </div>
+            <div class="formline">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="<%=page.data.email%>">
+            </div>
+            <div class="formline">
+                <label for="password1">Password</label>
+                <input type="password" name="password1" id="password1">
+            </div>
+            <div class="formline">
+                <label for="password2">Repeat Password</label>
+                <input type="password" name="password2" id="password2">
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="button" type="submit">Sign Up</button>
+        </form>
+    </main>
+</body>
+</html>

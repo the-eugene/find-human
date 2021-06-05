@@ -1,0 +1,65 @@
+input, label{display: inline-block;}
+input, textarea, legend {font-size: 20px;}
+
+fieldset {margin: 10px;}
+form div{
+  grid-gap: 10px;
+  font-size: 20px;
+}
+
+form div {margin: 10px auto}
+#clear,#calculate {padding: 10px;}
+
+input:invalid {
+  border: 1px solid red;
+  background: #ffd0d0;
+}
+
+input[type='submit']{
+    display: block;
+    padding: 10px;
+    font-size: 25px;
+    margin: auto;
+}
+
+.formline{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+.formline input{
+    width: 100%;
+}
+
+.formline label{
+    display: inline-block;
+    width: 100px;
+}
+
+.formblock label{
+    display: block;
+}
+
+.formblock textarea{
+    width: 100%;
+}
+
+
+.message{
+    padding: 10px;
+    font-weight: bold
+}
+
+.error{
+    border: 1px solid #682514;
+    background-color: #fda085;
+}
+
+.warning{
+    border: 1px solid #a7973f;
+    background-color: #fde185;
+}
+
+.success{
+    border: 1px solid #7fa73f;
+    background-color: #e1fd85;
+}
