@@ -10,10 +10,10 @@ const Pet = new Schema({
     type: String,
     required: true
   },
-  breed: [{
+  breed: {
     type: String,
     required: true
-  }],
+  },
   age: {
     type: Number,
     required: true
