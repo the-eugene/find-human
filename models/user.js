@@ -15,6 +15,34 @@ const User = new Schema({
     type: String,
     required: true
   },
+  lookingForPets: {
+    type: Boolean,
+    required: false
+  },
+  pet_breed: {
+    type: String,
+    required: false
+  },
+  pet_size: {
+    type: String,
+    required: false
+  },
+  pet_activity_level: {
+    type: String,
+    required: false
+  },
+  pet_fenced_yard: {
+    type: Boolean,
+    required: false
+  },
+  pet_gender: {
+    type: String,
+    required: false
+  },
+  pet_age: {
+    type: Number,
+    required: false
+  }
 });
 
 User.methods.compare = function (password) {
