@@ -32,6 +32,11 @@ const Pet = new Schema({
   },
   specialNeeds: { // not required
     type: String,
+  },
+  ownerId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 

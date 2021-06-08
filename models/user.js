@@ -15,8 +15,6 @@ const User = new Schema({
     type: String,
     required: true
   },
-  petIds: [{petId: {type: Schema.Types.ObjectId, ref: 'Pet', required: true}}],
-  favorites: [{petId: {type: Schema.Types.ObjectId, ref: 'Pet', required: true}}]
 });
 
 User.methods.compare = function (password) {
