@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/pets.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav.ejs') %>
+
+            <main>
+                <% if (prods.length > 0) { %>
+                    <div class="grid">
+                        <% for (let pet of prods) { %>
+                            <article class="card pet-item">
+                                <header class="card__header">
+                                    <h1 class="pet__title">
+                                        <%= pet.title %>
+                                    </h1>
+                                </header>
+                                <div class="card__image">
+                                    <img src="<%= pet.imageUrl %>" alt="<%= pet.title %>">
+                                </div>
+                                <div class="card__content">
+                                    <h2 class="pet__price">$
+                                        <%= pet.price %>
+                                    </h2>
+                                    <p class="pet__description">
+                                        <%= pet.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/admin/edit-pet/<%= pet._id %>?edit=true" class="btn">Edit</a>
+                                    <form action="/admin/delete-pet" method="POST">
+                                        <input type="hidden" value="<%= pet._id %>" name="petId">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+
+                                </div>
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No pets Found!</h1>
+                        <% } %>
+            </main>
