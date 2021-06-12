@@ -11,16 +11,24 @@
                         <% for (let pet of prods) { %>
                             <article class="card pet-item">
                                 <header class="card__header">
-                                    <h1 class="pet__title">
-                                        <%= pet.title %>
+                                    <h1 class="pet__name">
+                                        <%= pet.name %>
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="<%= pet.imageUrl %>" alt="<%= pet.title %>">
+                                    <img src="<%= pet.imageUrl %>" alt="<%= pet.name %>">
                                 </div>
                                 <div class="card__content">
-                                    <h2 class="pet__price">$
-                                        <%= pet.price %>
+                                    <h2 class="pet__name">$
+                                        <%= pet.name %>
+                                    </h2>
+
+                                    <h2 class="pet__breed">$
+                                        <%= pet.breed %>
+                                    </h2>
+
+                                    <h2 class="pet__adoptionFee">$
+                                        <%= pet.adoptionFee %>
                                     </h2>
                                     <p class="pet__description">
                                         <%= pet.description %>

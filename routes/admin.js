@@ -1,26 +1,58 @@
 const router = require('express').Router();
-const { body } = require('express-validator');
-const admin = require('../controllers/admin');
-
-const validEditPage=[
-    body('isbn').trim().isISBN().withMessage('Please enter a valid ISBN'),
-    body('title').trim().isString().isLength({min: 3}),
-    body('subtitle').trim().isString(),
-    body('author').trim().isString().notEmpty(),
-    body('description').trim().isString().notEmpty(),
-    body('price').trim().isFloat({gt:0}),
-    body('image').trim().isURL()
-];
+const {
+  body
+} = require('express-validator');
 
 //for now all admin functions require just user access
-const isUser=require('../middleware/isUser'); 
 
-router.get('/add-book', isUser, admin.editBook);
-router.get('/edit-book/:isbn', isUser, admin.editBook);
+const adminController = require('../controllers/admin');
+const isUser = require('../middleware/isUser');
 
-router.post('/edit-book/:isbn',validEditPage, isUser, admin.submitBook);
-router.post('/edit-book',validEditPage, isUser, admin.submitBook);
+// /admin/add-pet => GET
+router.get('/add-pet', isUser, adminController.getAddPet);
 
-router.post('/delete-book', isUser, admin.deleteBook);
+// /admin/pets => GET
+router.get('/pets', isUser, adminController.getPets);
+
+// /admin/add-pet => POST
+router.post(
+  '/add-pet',
+  [
+    body('imageUrl').isURL(),
+    body('name').isString().isLength({ min: 3 }).trim(),
+    body('species'),
+    body('breed'),
+    body('age'),
+    body('gender'),
+    body('activityLevel'),
+    body('description').isLength({ min: 5, max: 400 }).trim(),
+    body('specialNeeds'),
+    body('adoptionFee').isFloat(),      
+  ],
+  isUser,
+  adminController.postAddPet
+);
+
+router.get('/edit-pet/:petId', isUser, adminController.getEditPet);
+
+router.post(
+  '/edit-pet',
+  [
+    body('imageUrl').isURL(),
+    body('name').isString().isLength({ min: 3 }).trim(),
+    body('species'),
+    body('breed'),
+    body('age'),
+    body('gender'),
+    body('activityLevel'),
+    body('description').isLength({ min: 5, max: 400 }).trim(),
+    body('specialNeeds'),
+    body('adoptionFee').isFloat(),   
+  ],
+  isUser,
+  adminController.postEditPet
+);
+
+router.post('/delete-pet', isUser, adminController.postDeletePet);
 
 module.exports = router;

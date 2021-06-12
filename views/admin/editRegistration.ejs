@@ -1,0 +1,123 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/pets.css">
+</head>
+
+<body>
+   <%- include('../includes/nav.ejs') %>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="pet-form" action="/admin/<% if (editing) { %>edit-pet<% } else { %>add-pet<% } %>" method="POST">
+            
+            <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="imageUrl" 
+                    id="imageUrl" 
+                    value="<% if (editing || hasError) { %><%= pet.imageUrl %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    value="<% if (editing || hasError) { %><%= pet.name %><% } %>">
+            </div>
+            
+            <div class="form-control">
+                <label for="species">Species</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'species') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="species" 
+                    id="species" 
+                    value="<% if (editing || hasError) { %><%= pet.species %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="breed">Breed</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'breed') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="breed" 
+                    id="breed" 
+                    value="<% if (editing || hasError) { %><%= pet.breed %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="age">Pet Age</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'age') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="age" 
+                    id="age" 
+                    step="0.01" 
+                    value="<% if (editing || hasError) { %><%= pet.age %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="gender">Pet Gender</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'gender') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="gender" 
+                    id="gender" 
+                    value="<% if (editing || hasError) { %><%= pet.gender %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="activityLevel">Pet Activity Level</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'activityLevel') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="activityLevel" 
+                    id="activityLevel" 
+                    value="<% if (editing || hasError) { %><%= pet.activityLevel %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+                    name="description" 
+                    id="description" 
+                    rows="5"><% if (editing || hasError) { %><%= pet.description %><% } %></textarea>
+            </div>
+
+            <div class="form-control">
+                <label for="specialNeeds">Special Needs</label>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'specialNeeds') ? 'invalid' : '' %>"
+                    name="specialNeeds" 
+                    id="specialNeeds" 
+                    rows="5"><% if (editing || hasError) { %><%= pet.specialNeeds %><% } %></textarea>
+            </div>
+
+            <div class="form-control">
+                <label for="adoptionFee">Adoption Fee</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'adoptionFee') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="adoptionFee" 
+                    id="adoptionFee" 
+                    step="0.01" 
+                    value="<% if (editing || hasError) { %><%= pet.adoptionFee %><% } %>">
+            </div>
+            
+
+            <% if (editing) { %>
+                <input type="hidden" value="<%= pet._id %>" name="petId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update pet<% } else { %>Add pet<% } %></button>
+        </form>
+    </main>
