@@ -21,12 +21,20 @@ exports.getAddPet = (req, res, next) => {
 };
 
 exports.getPets = (req, res, next) => {
+    const page = {
+        // title: "Pet Registration",
+        // path: "/admin/editRegistration",
+        style: ["pretty", "form"],
+        message: req.flash('message')
+    }
+    
     Pet.find({
-            owerId: req.user._id
+            ownerId: req.user._id
         })
         .then(pets => {
-            console.log(pets);
+            console.log(pets, 'pets');
             res.render('admin/edit-pet', {
+                page,
                 pets: pets,
                 pageTitle: 'pets',
                 path: '/admin/edit-pet'
@@ -51,7 +59,7 @@ exports.postAddPet = (req, res, next) => {
     const specialNeeds = req.body.specialNeeds;
     const adoptionFee = req.body.adoptionFee;
     const errors = validationBulder(req);
-    console.log(errors);
+    console.log(description);
 
     const page = {
         title: "Pet Registration",
@@ -85,6 +93,7 @@ exports.postAddPet = (req, res, next) => {
     }
 
     const pet = new Pet({
+        page,
         imageUrl: imageUrl,
         name: name,
         species: species,
@@ -95,7 +104,7 @@ exports.postAddPet = (req, res, next) => {
         description: description,
         specialNeeds: specialNeeds,
         adoptionFee: adoptionFee,
-        owerId: req.user
+        ownerId: req.user._id
     });
     pet
         .save()
@@ -191,7 +200,7 @@ exports.postEditPet = (req, res, next) => {
 
     Pet.findById(petId)
         .then(pet => {
-            if (pet.owerId.toString() !== req.user._id.toString()) {
+            if (pet.ownerId.toString() !== req.user._id.toString()) {
                 return res.redirect('/');
             }
             pet.imageUrl = updatedImageUrl;
@@ -221,7 +230,7 @@ exports.postDeletePet = (req, res, next) => {
     const petId = req.body.petId;
     Pet.deleteOne({
             _id: petId,
-            owerId: req.user._id
+            ownerId: req.user._id
         })
         .then(() => {
             console.log('DESTROYED PET REGISTRATION');
@@ -264,10 +273,10 @@ exports.postDeletePet = (req, res, next) => {
 //     }) : null;
 //     if (!book) {
 //         book = new Book(changes);
-//         book.owerId = req.user;
+//         book.ownerId = req.user;
 //     } else {
 //         Object.assign(book, changes);
-//         if (!book.owerId) book.owerId = req.user; //take ownership if none was assigned
+//         if (!book.ownerId) book.ownerId = req.user; //take ownership if none was assigned
 //     }
 //     if (validationResult(req).isEmpty() && book.isOwner(req.user._id)) {
 //         book.save();
@@ -296,7 +305,7 @@ exports.postDeletePet = (req, res, next) => {
 //     try {
 //         await Book.deleteOne({
 //             isbn: req.body.isbn,
-//             owerId: req.user._id
+//             ownerId: req.user._id
 //         });
 //         res.redirect('/');
 //     } catch (e) {
