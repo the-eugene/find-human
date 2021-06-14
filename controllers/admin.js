@@ -26,10 +26,10 @@ exports.getPets = (req, res, next) => {
         })
         .then(pets => {
             console.log(pets);
-            res.render('admin/pets', {
+            res.render('admin/edit-pet', {
                 pets: pets,
                 pageTitle: 'pets',
-                path: '/admin/pets'
+                path: '/admin/edit-pet'
             });
         })
         .catch(err => {
@@ -51,12 +51,19 @@ exports.postAddPet = (req, res, next) => {
     const specialNeeds = req.body.specialNeeds;
     const adoptionFee = req.body.adoptionFee;
     const errors = validationBulder(req);
+    console.log(errors);
 
-    if (!errors.isEmpty()) {
-        console.log(errors.array());
+    const page = {
+        title: "Pet Registration",
+        path: "/admin/add-pet",
+        style: ["pretty", "form"],
+        message: req.flash('message')
+    }
+
+    if (errors.length != 0) {
+        console.log(errors);
         return res.status(422).render('admin/edit-pet', {
-            pageTitle: 'Add Pet',
-            path: '/admin/add-pet',
+            page,
             editing: false,
             hasError: true,
             pet: {
@@ -69,10 +76,11 @@ exports.postAddPet = (req, res, next) => {
                 activityLevel: activityLevel,
                 description: description,
                 specialNeeds: specialNeeds,
-                adoptionFee: adoptionFee
+                adoptionFee: adoptionFee,
+                message: req.flash('message')
             },
-            errorMessage: errors.array()[0].msg,
-            validationErrors: errors.array()
+            // errorMessage: errors.array()[0].msg,
+            // validationErrors: errors.array()
         });
     }
 
@@ -152,6 +160,8 @@ exports.postEditPet = (req, res, next) => {
     const updatedDesc = req.body.description;
     const updatedSpecialNeeds = req.body.specialNeeds;
     const updatedAdoptionFee = req.body.adoptionFee;
+
+    //console.log('postEditPet');
 
     const errors = validationBulder(req);
 
@@ -276,6 +286,7 @@ exports.postDeletePet = (req, res, next) => {
 //                 text: 'Failed Validation'
 //             });
 //             validationBulder(req);
+
 //         }
 //         renderBookEdit(req, res, book);
 //     }
