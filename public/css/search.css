@@ -1,0 +1,68 @@
+.card {
+  box-shadow: 0 0 5px 3px lightgray;
+  margin: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+
+}
+
+.twocol{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.card h2 {
+  margin-left: 24px;
+  margin-top: 16px;
+}
+
+.card img {
+  max-width: 90%;
+  margin: 1rem 5%
+}
+
+.card .details {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  padding: 16px;
+}
+
+.card .details .label {
+  font-weight: bold;
+}
+
+.card .actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  margin: 8px;
+}
+
+.card .actions .button {
+  flex-grow: 1;
+  border-radius: 5px;
+  margin: 5px 5px ;  
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+}
+
+.search .filter {
+  display: inline-block;
+  margin: 4px;
+}
+.search .filter .button {
+  display: inline;
+  border-radius: 5px;
+  margin: 5px 5px ;
+}
+
+
+@media screen and (max-width: 450px) {
+  .twocol{ 
+      grid-template-columns: 1fr;
+  }
+}

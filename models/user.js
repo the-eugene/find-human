@@ -15,6 +15,10 @@ const User = new Schema({
     type: String,
     required: true
   },
+  level: {
+    type: Number,
+    required: true
+  },
   lookingForPets: {
     type: Boolean,
     required: false
@@ -40,7 +44,7 @@ const User = new Schema({
     required: false
   },
   pet_age: {
-    type: Number,
+    type: String,
     required: false
   }
 });
