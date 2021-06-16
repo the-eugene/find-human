@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../includes/head.ejs'); %>
+<%- include('../../includes/head.ejs'); %>
 
 <body>
-  <%- include('../includes/nav.ejs'); %>
+  <%- include('../../includes/nav.ejs'); %>
   <main>
-    <%- include('../includes/message.ejs'); %>
+    <%- include('../../includes/message.ejs'); %>
     <section class="search">
       <form action="/search/pets" method="POST">
         <div class="filter">
           <label for="breed">Breed</label>
           <select id="breed" name="breed">
             <option></option>
-            <option <% if(searchParams.breed == "German Shepard") {%> selected <%}%>>German Shepard</option>
-            <option <% if(searchParams.breed == "Golden Retriever") {%> selected <%}%>>Golden Retriever</option>
-            <option <% if(searchParams.breed == "Mix") {%> selected <%}%>>Mix</option>
+            <% dogBreeds.map(breed => { %>
+              <option <% if (searchParams.breed === breed) { %> selected <% }%>> <%= breed %></option>
+            <% }) %>
           </select>
         </div>
         <div class="filter">
@@ -27,12 +27,13 @@
           </select>
         </div>
         <div class="filter">
-          <label for="activityLevel">Activity Level</label>
+          <label for="activityLevel">Temperament</label>
           <select id="activityLevel" name="activityLevel">
             <option></option>
-            <option <% if(searchParams.activityLevel == "Active") {%> selected <%}%>>Active</option>
-            <option <% if(searchParams.activityLevel == "Normal") {%> selected <%}%>>Normal</option>
-            <option <% if(searchParams.activityLevel == "Lethargic") {%> selected <%}%>>Lethargic</option>
+
+            <% dogTemperaments.map(temperament => { %>
+              <option <% if (searchParams.activityLevel === temperament) { %> selected <% }%>> <%= temperament %></option>
+            <% }) %>
           </select>
         </div>
         <div class="filter">         
@@ -82,7 +83,7 @@
         </section>
 
         <div class="actions">
-          <a class="button" href="book">Details</a>
+          <a class="button" href="/search/pets/details/<%= pet.breed %>">Details</a>
           <% if(userLevel>0) { %>
           <form action="/cart" method="post">
             <button class="button" type="submit">Add to Cart</button>

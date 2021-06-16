@@ -17,7 +17,8 @@ const User = new Schema({
   },
   level: {
     type: Number,
-    required: true
+    required: true,
+    default: 1
   },
   lookingForPets: {
     type: Boolean,
