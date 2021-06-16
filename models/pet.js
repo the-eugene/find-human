@@ -10,10 +10,6 @@ const Pet = new Schema({
     type: String,
     required: true
   },
-  species: {
-    type: String,
-    required: true
-  },
   breed: {
     type: String,
     required: true

@@ -1,14 +1,42 @@
 const Pet = require('../models/pet');
 
+const fetch = require('node-fetch');
+
+const _=require('lodash');
+
 const {
     validationBulder
 } = require('../util/util');
+
+let gBreeds = [];
+
+const getBreeds = () => {
+    fetch(process.env.DOG_API_URL, {
+        headers: {
+            'x-api-key':process.env.DOG_API_KEY
+        }
+    }).then(res => {
+        return res.json();
+    })
+        .then(breeds => {
+            console.log(breeds);
+            for (b = 0; b < breeds.length; b++) {
+                console.log(b);
+                if (breeds[b]) {
+                    gBreeds.push(breeds[b].breed_group)
+                }
+            };
+            gBreeds = _.uniq(gBreeds);
+        });
+};
+
+getBreeds();
 
 exports.getAddPet = (req, res, next) => {
     const page = {
         title: "Pet Registration",
         path: "/admin/editRegistration",
-        style: ["pretty", "form"],
+        style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
     res.render('admin/editRegistration', {
@@ -16,7 +44,8 @@ exports.getAddPet = (req, res, next) => {
         editing: false,
         hasError: false,
         errorMessage: null,
-        validationErrors: []
+        validationErrors: [],
+        breeds: gBreeds
     });
 };
 
@@ -24,7 +53,7 @@ exports.getPets = (req, res, next) => {
     const page = {
         // title: "Pet Registration",
         // path: "/admin/editRegistration",
-        style: ["pretty", "form"],
+        style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
     
@@ -50,7 +79,6 @@ exports.getPets = (req, res, next) => {
 exports.postAddPet = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const name = req.body.name;
-    const species = req.body.species;
     const breed = req.body.breed;
     const age = req.body.age;
     const gender = req.body.gender;
@@ -64,7 +92,7 @@ exports.postAddPet = (req, res, next) => {
     const page = {
         title: "Pet Registration",
         path: "/admin/add-pet",
-        style: ["pretty", "form"],
+        style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
 
@@ -77,7 +105,6 @@ exports.postAddPet = (req, res, next) => {
             pet: {
                 imageUrl: imageUrl,
                 name: name,
-                species: species,
                 breed: breed,
                 age: age,
                 gender: gender,
@@ -96,7 +123,6 @@ exports.postAddPet = (req, res, next) => {
         page,
         imageUrl: imageUrl,
         name: name,
-        species: species,
         breed: breed,
         age: age,
         gender: gender,
@@ -121,10 +147,11 @@ exports.postAddPet = (req, res, next) => {
 };
 
 exports.getEditPet = (req, res, next) => {
+    console.log('we got here');
     const page = {
         title: "Edit Pet",
         path: "/admin/editRegistration",
-        style: ["pretty", "form"],
+        style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
 
@@ -139,11 +166,11 @@ exports.getEditPet = (req, res, next) => {
                 return res.redirect('/');
             }
             console.log('page', page);
-            res.render('admin/edit-pet', {
+            res.render('admin/editRegistration', {
                 page,
                 // pageTitle: 'Edit Pet',
                 // path: '/admin/edit-pet',
-                // editing: editMode,
+                editing: editMode,
                 pet: pet,
                 hasError: false,
                 errorMessage: null,
@@ -161,7 +188,6 @@ exports.postEditPet = (req, res, next) => {
     const petId = req.body.petId;
     const updatedImageUrl = req.body.imageUrl;
     const updatedname = req.body.name;
-    const updatedSpecies = req.body.species;
     const updatedBreed = req.body.breed;
     const updatedAge = req.body.age;
     const updatedGender = req.body.gender;
@@ -174,7 +200,7 @@ exports.postEditPet = (req, res, next) => {
 
     const errors = validationBulder(req);
 
-    if (!errors.isEmpty()) {
+    if (errors.length != 0) {
         return res.status(422).render('admin/edit-pet', {
             pageTitle: 'Edit Pet',
             path: '/admin/edit-pet',
@@ -183,7 +209,6 @@ exports.postEditPet = (req, res, next) => {
             pet: {
                 imageUrl: updatedImageUrl,
                 name: updatedname,
-                species: updatedSpecies,
                 breed: updatedBreed,
                 age: updatedAge,
                 gender: updatedGender,
@@ -205,7 +230,6 @@ exports.postEditPet = (req, res, next) => {
             }
             pet.imageUrl = updatedImageUrl;
             pet.name = updatedname;
-            pet.species = updatedSpecies;
             pet.breed = updatedBreed;
             pet.age = updatedAge;
             pet.gender = updatedGender;

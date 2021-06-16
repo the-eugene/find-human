@@ -1,6 +1,4 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/form.css">
-    <link rel="stylesheet" href="/css/pets.css">
 </head>
 
 <body>
@@ -31,25 +29,17 @@
                     id="name" 
                     value="<% if (editing || hasError) { %><%= pet.name %><% } %>">
             </div>
-            
-            <div class="form-control">
-                <label for="species">Species</label>
-                <input 
-                    class="<%= validationErrors.find(e => e.param === 'species') ? 'invalid' : '' %>"
-                    type="text" 
-                    name="species" 
-                    id="species" 
-                    value="<% if (editing || hasError) { %><%= pet.species %><% } %>">
-            </div>
 
             <div class="form-control">
-                <label for="breed">Breed</label>
-                <input 
-                    class="<%= validationErrors.find(e => e.param === 'breed') ? 'invalid' : '' %>"
-                    type="text" 
-                    name="breed" 
-                    id="breed" 
-                    value="<% if (editing || hasError) { %><%= pet.breed %><% } %>">
+                <label for="breed">Breed</label>                  
+                <select class="<%= validationErrors.find(e => e.param === 'breed') ? 'invalid' : '' %>"
+                   id="breed"  
+                name="breed">
+
+                <% for (let breed of breeds) { %>
+                    <option value="<%= breed %>"><%= breed %></option>
+                <% } %>
+                </select>
             </div>
 
             <div class="form-control">
