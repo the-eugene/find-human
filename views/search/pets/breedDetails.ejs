@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../includes/head.ejs'); %>
+
+<body>
+<%- include('../../includes/nav.ejs'); %>
+<main>
+    <%- include('../../includes/message.ejs'); %>
+    <div>
+        <h1>
+            <%= breedInfo.name %>
+        </h1>
+        <div class="img-container">
+            <% if (src) { %>
+                <img src="<%= src %>">
+            <% } %>
+        </div>
+        <div class="grid">
+            <div class="stack">
+                <div>
+                    <h3>
+                        Life Span
+                    </h3>
+                    <div>
+                        <%= breedInfo.life_span %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Typical Weight
+                    </h3>
+                    <div>
+                        <%= breedInfo.weight.imperial %> lbs
+                    </div>
+                    <div>
+                        <%= breedInfo.weight.metric %> kg
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Typical Height
+                    </h3>
+                    <div>
+                        <%= breedInfo.height.imperial %> in
+                    </div>
+                    <div>
+                        <%= breedInfo.height.metric %> cm
+                    </div>
+                </div>
+            </div>
+            <div class="stack">
+                <div>
+                    <h3>
+                        Temperament
+                    </h3>
+                    <div>
+                        <%= breedInfo.temperament %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Bred For
+                    </h3>
+                    <div>
+                        <%= breedInfo.bred_for %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Breed Group
+                    </h3>
+                    <div>
+                        <%= breedInfo.breed_group %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-container">
+            <a class="button" href="/search/pets">Go back</a>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

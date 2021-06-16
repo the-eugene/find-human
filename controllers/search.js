@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Pet = require('../models/pet');
+const {getDogByBreed, getBreedImageByImageId} = require('../services/pets');
 
 exports.getHumans = (req, res, next) => {
     const page = {
@@ -49,7 +50,7 @@ exports.postHumans = (req, res, next) => {
         });
 };
 
-exports.getPets = (req, res, next) => {
+exports.getPets = async (req, res, next) => {
     const page = {
         title: "Find Pets",
         path: "/search/pets",
@@ -88,4 +89,23 @@ exports.postPets = (req, res, next) => {
         .then(data => { res.render('search/pets', { 'data': data, page: page, searchParams: searchParams }); });
 };
 
+exports.getPetDetails = async (req, res, next) => {
+    const {breed} = req.params;
+    if (!breed) res.redirect("/search/pets");
+
+    const page = {
+        title: "Find Pets",
+        path: "/search/pets",
+        style: ["pretty", "details"]
+    };
+
+    const breedInfo = await getDogByBreed(breed);
+    const src = await getBreedImageByImageId(breedInfo.reference_image_id);
+
+    if (breedInfo && breedInfo.name) {
+        res.render('search/pets/breedDetails', {breedInfo: breedInfo, page: page, src: src });
+    } else {
+        res.redirect("/search/pets");
+    }
+}
 
