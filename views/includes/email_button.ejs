@@ -1,0 +1,8 @@
+<% if(userLevel>0) {%>
+    
+    <form action="/email/<%=sendTo%>" method="get" >
+      <button class="button" type="submit">Message</button>
+      <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+      
+    </form>
+<% } %>
