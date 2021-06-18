@@ -11,7 +11,7 @@ const {
 let gBreeds = [];
 
 const getBreeds = () => {
-    fetch(process.env.DOG_API_URL, {
+    fetch(process.env.DOG_BREED_API_URL, {
         headers: {
             'x-api-key':process.env.DOG_API_KEY
         }
@@ -172,6 +172,7 @@ exports.getEditPet = (req, res, next) => {
                 // path: '/admin/edit-pet',
                 editing: editMode,
                 pet: pet,
+                breeds: gBreeds,
                 hasError: false,
                 errorMessage: null,
                 validationErrors: []

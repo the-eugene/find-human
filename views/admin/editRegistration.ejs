@@ -1,7 +1,6 @@
 <%- include('../includes/head.ejs') %>
-</head>
 
-<body>
+
    <%- include('../includes/nav.ejs') %>
 
     <main>
@@ -101,8 +100,11 @@
                     step="0.01" 
                     value="<% if (editing || hasError) { %><%= pet.adoptionFee %><% } %>">
             </div>
-            
 
+            <div class="imageDisplay">
+                <img src="" alt="" id="imageDisplay" style="width:500px; height: 500px;">
+            </div>
+            
             <% if (editing) { %>
                 <input type="hidden" value="<%= pet._id %>" name="petId">
             <% } %>
@@ -111,3 +113,5 @@
             <button class="btn" type="submit"><% if (editing) { %>Update pet<% } else { %>Add pet<% } %></button>
         </form>
     </main>
+
+    <%- include('../includes/footer.ejs') %>
