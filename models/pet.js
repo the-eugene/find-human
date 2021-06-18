@@ -15,7 +15,7 @@ const Pet = new Schema({
     required: true
   },
   age: {
-    type: Number,
+    type: String,
     required: true
   },
   gender: {
@@ -26,6 +26,10 @@ const Pet = new Schema({
     type: String,
     required: true
   },
+  size: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
@@ -33,6 +37,7 @@ const Pet = new Schema({
   specialNeeds: { // not required
     type: String,
   },
+
   adoptionFee: { 
     type: Number,
     required: true,
