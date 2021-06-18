@@ -29,6 +29,7 @@ function routeTable(app) {
   mkRoute(app, '/', 'store');
   mkRoute(app, '/', 'auth');
   mkRoute(app, '/search');
+  mkRoute(app, '/email');
 
   app
     .use('/500', fallback.get500_nolog)
@@ -65,7 +66,6 @@ function setupApp(app) {
       if (req.session.user) {
         try {
           req.user = await User.findById(req.session.user._id);
-          console.log(req.user);
           res.locals.userLevel = req.user.level;
         } catch (e) {
           console.error(e);

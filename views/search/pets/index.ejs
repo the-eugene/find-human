@@ -84,13 +84,7 @@
 
         <div class="actions">
           <a class="button" href="/search/pets/details/<%= pet.breed %>">Details</a>
-          <% if(userLevel>0) { %>
-          <form action="/cart" method="post">
-            <button class="button" type="submit">Add to Cart</button>
-            <input type="hidden" name="isbn" value="<%=  %>">
-            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-          </form>
-          <% } %>
+         <%- include('../../includes/email_button.ejs', {sendTo: pet.ownerId})%>
 
         </div>
 

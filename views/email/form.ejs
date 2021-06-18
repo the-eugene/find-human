@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs'); %>
+<body>
+    <%- include('../includes/nav.ejs'); %>
+<main>
+    <%- include('../includes/message.ejs'); %>
+    <form method="post" action="/email">
+        <div class="formline">
+            <label for="mailsubject">Subject</label>
+            <input type="Text" name="mailsubject" value="">
+        </div>
+        <div class="formline">
+            <label for="mailmessage">Message</label>
+            <textarea name="mailmessage" rows="5"></textarea>
+        </div>
+        <input type="hidden" name="mailto" value="<%= mailto %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="submit" value="Send">
+    </form>
+</main>
+</body>
+</html>
