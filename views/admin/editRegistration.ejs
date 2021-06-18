@@ -45,7 +45,7 @@
                 <label for="age">Pet Age</label>
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'age') ? 'invalid' : '' %>"
-                    type="number" 
+                    type="text" 
                     name="age" 
                     id="age" 
                     step="0.01" 
@@ -70,6 +70,16 @@
                     name="activityLevel" 
                     id="activityLevel" 
                     value="<% if (editing || hasError) { %><%= pet.activityLevel %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="size">Pet Size</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'size') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="size" 
+                    id="size" 
+                    value="<% if (editing || hasError) { %><%= pet.size %><% } %>">
             </div>
 
             <div class="form-control">

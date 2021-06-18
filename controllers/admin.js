@@ -19,9 +19,7 @@ const getBreeds = () => {
         return res.json();
     })
         .then(breeds => {
-            console.log(breeds);
             for (b = 0; b < breeds.length; b++) {
-                console.log(b);
                 if (breeds[b]) {
                     gBreeds.push(breeds[b].breed_group)
                 }
@@ -61,7 +59,6 @@ exports.getPets = (req, res, next) => {
             ownerId: req.user._id
         })
         .then(pets => {
-            console.log(pets, 'pets');
             res.render('admin/edit-pet', {
                 page,
                 pets: pets,
@@ -83,11 +80,11 @@ exports.postAddPet = (req, res, next) => {
     const age = req.body.age;
     const gender = req.body.gender;
     const activityLevel = req.body.activityLevel;
+    const size = req.body.size;
     const description = req.body.description;
     const specialNeeds = req.body.specialNeeds;
     const adoptionFee = req.body.adoptionFee;
     const errors = validationBulder(req);
-    console.log(description);
 
     const page = {
         title: "Pet Registration",
@@ -109,6 +106,7 @@ exports.postAddPet = (req, res, next) => {
                 age: age,
                 gender: gender,
                 activityLevel: activityLevel,
+                size: size,
                 description: description,
                 specialNeeds: specialNeeds,
                 adoptionFee: adoptionFee,
@@ -127,6 +125,7 @@ exports.postAddPet = (req, res, next) => {
         age: age,
         gender: gender,
         activityLevel: activityLevel,
+        size: size,
         description: description,
         specialNeeds: specialNeeds,
         adoptionFee: adoptionFee,
@@ -135,7 +134,6 @@ exports.postAddPet = (req, res, next) => {
     pet
         .save()
         .then(result => {
-            // console.log(result);
             console.log('Created Pet');
             res.redirect('/admin/pets');
         })
@@ -147,7 +145,6 @@ exports.postAddPet = (req, res, next) => {
 };
 
 exports.getEditPet = (req, res, next) => {
-    console.log('we got here');
     const page = {
         title: "Edit Pet",
         path: "/admin/editRegistration",
@@ -165,7 +162,6 @@ exports.getEditPet = (req, res, next) => {
             if (!pet) {
                 return res.redirect('/');
             }
-            console.log('page', page);
             res.render('admin/editRegistration', {
                 page,
                 // pageTitle: 'Edit Pet',
@@ -193,11 +189,10 @@ exports.postEditPet = (req, res, next) => {
     const updatedAge = req.body.age;
     const updatedGender = req.body.gender;
     const updatedActivityLevel = req.body.activityLevel;
+    const updatedSize = req.body.size;
     const updatedDesc = req.body.description;
     const updatedSpecialNeeds = req.body.specialNeeds;
     const updatedAdoptionFee = req.body.adoptionFee;
-
-    //console.log('postEditPet');
 
     const errors = validationBulder(req);
 
@@ -214,6 +209,7 @@ exports.postEditPet = (req, res, next) => {
                 age: updatedAge,
                 gender: updatedGender,
                 activityLevel: updatedActivityLevel,
+                size: updatedSize,
                 description: updatedDesc,
                 specialNeeds: updatedSpecialNeeds,
                 adoptionFee: updatedAdoptionFee,
@@ -235,6 +231,7 @@ exports.postEditPet = (req, res, next) => {
             pet.age = updatedAge;
             pet.gender = updatedGender;
             pet.activityLevel = updatedActivityLevel;
+            pet.size = updatedSize;
             pet.description = updatedDesc;
             pet.specialNeeds = updatedSpecialNeeds;
             pet.adoptionFee = updatedAdoptionFee;
@@ -268,85 +265,3 @@ exports.postDeletePet = (req, res, next) => {
         });
 };
 
-
-// exports.editBook = async (req, res, next) => {
-//     try {
-//         let book = req.params.isbn ? await Book.findOne({
-//             isbn: req.params.isbn
-//         }) : false;
-//         if ((!book) && req.params.isbn) {
-//             console.log("Book not found");
-//             next();
-//         } else renderBookEdit(req, res, book);
-//     } catch (e) {
-//         next(e);
-//     }
-// };
-
-// exports.submitBook = async (req, res, next) => {
-//     const changes = {
-//         "isbn": req.body.isbn,
-//         "title": req.body.title,
-//         "subtitle": req.body.subtitle,
-//         "author": req.body.author,
-//         "description": req.body.description,
-//         "price": req.body.price,
-//         "image": req.body.image
-//     }
-//     var book = req.params.isbn ? await Book.findOne({
-//         isbn: req.params.isbn
-//     }) : null;
-//     if (!book) {
-//         book = new Book(changes);
-//         book.ownerId = req.user;
-//     } else {
-//         Object.assign(book, changes);
-//         if (!book.ownerId) book.ownerId = req.user; //take ownership if none was assigned
-//     }
-//     if (validationResult(req).isEmpty() && book.isOwner(req.user._id)) {
-//         book.save();
-//         res.redirect('/book/' + book.isbn);
-//     } else {
-//         if (!book.isOwner(req.user._id)) {
-//             console.log('User does not have ownership');
-//             req.flash('message', {
-//                 class: 'error',
-//                 text: 'You do not have permission to edit this book'
-//             });
-//         } else {
-//             console.log("failed validation");
-//             req.flash('message', {
-//                 class: 'error',
-//                 text: 'Failed Validation'
-//             });
-//             validationBulder(req);
-
-//         }
-//         renderBookEdit(req, res, book);
-//     }
-// };
-
-// exports.deleteBook = async (req, res, next) => {
-//     try {
-//         await Book.deleteOne({
-//             isbn: req.body.isbn,
-//             ownerId: req.user._id
-//         });
-//         res.redirect('/');
-//     } catch (e) {
-//         next(e);
-//     }
-// }
-
-// function renderBookEdit(req, res, book) {
-//     const page = {
-//         title: "Edit Book",
-//         path: "/admin/add-book",
-//         style: ["pretty", "form"],
-//         message: req.flash('message')
-//     }
-//     res.render('admin/editBook.ejs', {
-//         page: page,
-//         book: book
-//     });
-// }
