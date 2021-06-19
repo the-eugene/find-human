@@ -11,7 +11,7 @@ const {
 let gBreeds = [];
 
 const getBreeds = () => {
-    fetch(process.env.DOG_BREED_API_URL, {
+    fetch(process.env.DOG_API_URL+'v1/breeds', {
         headers: {
             'x-api-key':process.env.DOG_API_KEY
         }
