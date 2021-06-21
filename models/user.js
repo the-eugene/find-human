@@ -40,7 +40,7 @@ const User = new Schema({
     required: false
   },
   pet_age: {
-    type: Number,
+    type: String,
     required: false
   }
 });

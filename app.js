@@ -55,7 +55,7 @@ function setupApp(app){
         if(req.session.user){
             try{
                 req.user = await User.findById(req.session.user._id);
-                res.locals.userLevel=req.user.level;
+                res.locals.userLevel=1;
             }
             catch(e){console.error(e);}
         } else {res.locals.userLevel=0;}
