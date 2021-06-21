@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const key = process.env.DOG_API_KEY;
-const url = `${process.env.DOG_API_URL}v1`;
+const url = `${process.env.DOG_API_URL}`;
 
 
 const getAllBreeds = async () =>
