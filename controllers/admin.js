@@ -1,8 +1,7 @@
 const Pet = require('../models/pet');
-
-const fetch = require('node-fetch');
-
-const _=require('lodash');
+const {
+    getDogBreeds
+} = require('../services/pets');
 
 const {
     validationBulder
@@ -11,21 +10,9 @@ const {
 let gBreeds = [];
 
 const getBreeds = () => {
-    fetch(process.env.DOG_API_URL+'/breeds', {
-        headers: {
-            'x-api-key':process.env.DOG_API_KEY
-        }
-    }).then(res => {
-        return res.json();
-    })
-        .then(breeds => {
-            for (b = 0; b < breeds.length; b++) {
-                if (breeds[b]) {
-                    gBreeds.push(breeds[b].breed_group)
-                }
-            };
-            gBreeds = _.uniq(gBreeds);
-        });
+    getDogBreeds().then(breeds => {
+        gBreeds = ['', ...breeds];
+    });
 };
 
 getBreeds();
