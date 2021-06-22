@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../includes/head.ejs'); %>
+
 <body>
+    <script>
+        function petDetails() {
+            if (document.getElementById('lookingForPets').checked) {
+                document.getElementById('petQuestions').style.display = 'block';
+            } else {
+                document.getElementById('petQuestions').style.display = 'none';
+            }
+        }
+        console.log("Pet Sign Up detail is working!")
+    </script>
     <%- include('../includes/nav.ejs'); %>
     <main>
         <%- include('../includes/message.ejs'); %>
@@ -15,16 +26,77 @@
                 <input type="email" name="email" id="email" value="<%=page.data.email%>">
             </div>
             <div class="formline">
-                <label for="password1">Password</label>
-                <input type="password" name="password1" id="password1">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
             </div>
             <div class="formline">
-                <label for="password2">Repeat Password</label>
-                <input type="password" name="password2" id="password2">
+                <label for="confirmedPassword">Confirmed Password</label>
+                <input type="password" name="confirmedPassword" id="confirmedPassword">
+            </div>
+            <div>
+                <label for="lookingForPets">Looking for Pet(s)?</label>
+                <input type="checkbox" onclick="petDetails()" id="lookingForPets" name="lookingForPets" value="Yes">
+            </div>
+            <div id="petQuestions" style="display:none">
+                <div>
+                    <label for="pet_breed">Breed</label>
+                    <select id="pet_breed" name="pet_breed">
+                        <option></option>
+                        <option>German Shepard</option>
+                        <option>Golden Retriever</option>
+                        <option>Mix</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="size">Size</label>
+                    <select id="size" name="size">
+                        <option></option>
+                        <option>Large</option>
+                        <option>Medium</option>
+                        <option>Small</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="pet_activity_level">Activity Level</label>
+                    <select id="pet_activity_level" name="pet_activity_level">
+                        <option></option>
+                        <option>Active</option>
+                        <option>Normal</option>
+                        <option>Lethargic</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="pet_fenced_yard">Needs Fenced Yard</label>
+                    <select id="pet_fenced_yard" name="pet_fenced_yard">
+                        <option></option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="pet_gender">Gender</label>
+                    <select id="pet_gender" name="pet_gender">
+                        <option></option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="pet_age">Age</label>
+                    <select id="pet_age" name="pet_age">
+                        <option></option>
+                        <option>Puppy</option>
+                        <option>Adolescent</option>
+                        <option>Adult</option>
+                        <option>Senior</option>
+                    </select>
+                </div>
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="button" type="submit">Sign Up</button>
         </form>
     </main>
+
 </body>
+
 </html>

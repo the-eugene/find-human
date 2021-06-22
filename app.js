@@ -59,22 +59,17 @@ function setupApp(app) {
     .use(require('connect-flash')())
 
     .use(async (req, res, next) => {
-
       res.locals.dogBreeds = await getDogBreeds();
       res.locals.dogTemperaments = await getDogTemperaments();
-
-      if (req.session.user) {
-        try {
-          req.user = await User.findById(req.session.user._id);
-          res.locals.userLevel = req.user.level;
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        res.locals.userLevel = 0;
-      }
-      res.locals.csrfToken = req.csrfToken();
-      next();
+        if(req.session.user){
+            try{
+                req.user = await User.findById(req.session.user._id);
+                res.locals.userLevel=1;
+            }
+            catch(e){console.error(e);}
+        } else {res.locals.userLevel=0;}
+        res.locals.csrfToken = req.csrfToken();
+        next();
     });
 }
 

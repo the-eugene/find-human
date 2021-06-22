@@ -18,7 +18,7 @@ exports.postLogin = async (req, res, next) => {
     try{
         let user = await User.findOne({ email: email })
         if (user&&await user.compare(password)) {
-            req.session.userLevel = user.level;
+            req.session.userLevel = 1;
             req.session.user = user;
             req.session.save(err => {err && console.log(err); res.redirect('/');});
         } else {
@@ -32,8 +32,17 @@ exports.postSignup = async (req, res, next) => {
     const changes={
         name: req.body.name,
         email: req.body.email,
-        password: await bcrypt.hash(req.body.password1, 12),
+        password: await bcrypt.hash(req.body.password, 12),
+        lookingForPets: req.body.lookingForPets == "Yes" ? true : false,
+        pet_breed: req.body.pet_breed,
+        size: req.body.size,
+        pet_activity_level: req.body.pet_activity_level,
+        pet_fenced_yard: req.body.pet_fenced_yard == "Yes" ? true : false,
+        pet_gender: req.body.pet_gender,
+        pet_age: req.body.pet_age
     }
+
+    console.log(req.body.pet_breed)
 
     if (validationResult(req).isEmpty()){
         (new User({...changes, cart: { items: [] }})).save();

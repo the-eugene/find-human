@@ -20,12 +20,12 @@ router.post('/signup',[
             }
             return true;
         }),
-    body('password1')
+    body('password')
         .trim()
         .isLength({ min: 5 }).withMessage("Password has to be at least 5 characters").bail()
         .isAlphanumeric().withMessage("Password can only contain letters and numbers"),
-    body('password2').trim().custom((v, { req }) => {
-        if (v !== req.body.password1) {
+    body('confirmedPassword').trim().custom((v, { req }) => {
+        if (v !== req.body.password) {
             throw new Error('Passwords don\'t match');
         }
         return true;
