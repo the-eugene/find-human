@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../includes/head.ejs'); %>
+
+<body>
+<%- include('../../includes/nav.ejs'); %>
+<main>
+    <%- include('../../includes/message.ejs'); %>
+    <div>
+        <h1>
+            <%= dog.name %>
+        </h1>
+        <div class="img-container">
+            <% if (dog && dog.imageUrl) { %>
+                <img src="<%= dog.imageUrl %>">
+            <% } %>
+        </div>
+        <div class="grid">
+            <div class="stack">
+                <div>
+                    <h3>
+                        Name
+                    </h3>
+                    <div>
+                        <%= dog.name %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Breed
+                    </h3>
+                    <div>
+                        <%= dog.breed %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Gender
+                    </h3>
+                    <div>
+                        <%= dog.gender %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Age
+                    </h3>
+                    <div>
+                        <%= dog.age %>
+                    </div>
+                </div>
+            </div>
+            <div class="stack">
+                <div>
+                    <h3>
+                        Activity Level
+                    </h3>
+                    <div>
+                        <%= dog.activityLevel %>
+                    </div>
+                </div>
+                <div>
+                    <h3>
+                        Description/Details
+                    </h3>
+                    <div>
+                        <%= dog.description %>
+                    </div>
+                </div>
+                <% if (dog && dog.specialNeeds) { %>
+                    <div>
+                        <h3>
+                            Special Needs
+                        </h3>
+                        <div>
+                            <%= dog.specialNeeds %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="footer-container">
+            <a class="button" href="/search/pets">Go back</a>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

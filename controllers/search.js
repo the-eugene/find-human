@@ -89,7 +89,7 @@ exports.postPets = (req, res, next) => {
         .then(data => { res.render('search/pets', { 'data': data, page: page, searchParams: searchParams }); });
 };
 
-exports.getPetDetails = async (req, res, next) => {
+exports.getBreedDetails = async (req, res, next) => {
     const {breed} = req.params;
     if (!breed) res.redirect("/search/pets");
 
@@ -107,5 +107,26 @@ exports.getPetDetails = async (req, res, next) => {
     } else {
         res.redirect("/search/pets");
     }
+}
+
+
+exports.getPetDetails = async (req, res, next) => {
+    const {petId} = req.params;
+    if (!petId) res.redirect("/search/pets");
+
+    const page = {
+        title: "Find Pets",
+        path: "/search/pets",
+        style: ["pretty", "details"]
+    };
+
+    Pet.findById(petId)
+      .then(petInfo => {
+          if (petInfo && petInfo.name) {
+              return res.render('search/pets/petDetails', {dog: petInfo, page: page});
+          } else {
+              return res.redirect("/search/pets");
+          }
+      });
 }
 
