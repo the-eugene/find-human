@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const Pet = new Schema({
-  name: {
+  imageUrl: {
     type: String,
     required: true
   },
-  species: {
+  name: {
     type: String,
     required: true
   },
@@ -15,7 +15,7 @@ const Pet = new Schema({
     required: true
   },
   age: {
-    type: Number,
+    type: String,
     required: true
   },
   gender: {
@@ -26,12 +26,21 @@ const Pet = new Schema({
     type: String,
     required: true
   },
+  size: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
   },
   specialNeeds: { // not required
     type: String,
+  },
+
+  adoptionFee: { 
+    type: Number,
+    required: true,
   },
   ownerId: {
     type: Schema.Types.ObjectId,

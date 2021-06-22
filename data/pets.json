@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Betty",   
+    "breed": "German Shepard",
+    "age": "Puppy",
+    "gender": "Female",
+    "activityLevel": "Active",
+    "size": "Large",
+    "imageUrl": "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2016/06/21195710/German-Shepherd-Dog-laying-down-in-the-backyard.jpeg",
+    "description": "Lovable, high energy pup.  Will need lots of attention and training as she grows up.",
+    "specialNeeds": "Full time caretaker",
+    "ownerId": "60c536ba8ddc90659058e4ad"
+  },
+  {
+    "name": "Butters",   
+    "breed": "Golden Retriever",
+    "age": "Adult",
+    "gender": "Male",
+    "activityLevel": "Active",
+    "size": "Large",
+    "imageUrl": "https://vetstreet.brightspotcdn.com/dims4/default/b466b8e/2147483647/crop/0x0%2B0%2B0/resize/645x380/quality/90/?url=https%3A%2F%2Fvetstreet-brightspot.s3.amazonaws.com%2Ffa%2Fd15000a0d311e0a2380050568d634f%2Ffile%2FGolden-Retriever-3-645mk062111.jpg",
+    "description": "Active and friendly fellow.  Just watch out for the tail.  It can clear of a coffee table in two sweeps.",
+    "specialNeeds": "Family.",
+    "ownerId": "60c536ba8ddc90659058e4ae"
+  },
+  {
+    "name": "Nugget",   
+    "breed": "Chihuahua",
+    "age": "Adolescent",
+    "gender": "Male",
+    "activityLevel": "Lethargic",
+    "size": "Small",
+    "imageUrl": "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/27134523/Longhaired-Chihuahua-walking-in-the-grass.jpg",
+    "description": "Loves a good lap and he will sound the alarm when anyone come near the house.",
+    "specialNeeds": "",
+    "ownerId": "60c536ba8ddc90659058e4af"
+  }
+]

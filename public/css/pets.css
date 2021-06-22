@@ -1,0 +1,47 @@
+article.product{
+border: 1px solid #0002;
+}
+
+.book_info{
+    padding: 4px;
+}
+
+.book_title{
+    font-size: 20px;
+}
+
+.book_subtitle{
+    font-size: 15px;
+}
+
+.book_author{
+    font-size: 13px;
+    padding-left: 1em;
+}
+.book_price{
+    font-size: 20px;
+    padding-left: 1em;
+}
+
+.twocol{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.note{
+    border: 1px solid #0004;
+    text-align: center;
+    text-decoration: underline goldenrod;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #5002;
+}
+
+
+
+@media screen and (max-width: 400px) {
+    .twocol{ 
+        grid-template-columns: 1fr;
+    }
+}

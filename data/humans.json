@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Test Tester",
+    "email": "test@test.com",
+    "password": "$2a$12$ZHztimtfYFh.E36M7ZQXl.TJlVQDZTnimLLyL5e7Np/WmQxnI.KJi",
+    "level": 0,
+    "lookingForPets": false,
+    "pet_breed": "",
+    "pet_size": "",
+    "pet_activity_level": "",
+    "pet_fenced_yard": false,
+    "pet_gender": "",
+    "pet_age": ""
+  },
+  {
+    "name": "Test1 Tester",
+    "email": "Test1@test.com",
+    "password": "$2a$12$mO71mnmIcsfWmQsnq/DJXOpLcHu0GPPoASqhvEhOoe7gO.vM5Ojpa",
+    "level": 1,
+    "lookingForPets": true,
+    "pet_breed": "German Shepard",
+    "pet_size": "Large",
+    "pet_activity_level": "Active",
+    "pet_fenced_yard": true,
+    "pet_gender": "Female",
+    "pet_age": "Puppy"
+  },
+  {
+    "name": "Test2 Tester",
+    "email": "Test2@test.com",
+    "password": "$2a$12$1Lqm6Kj4LrumKVumFshFM.f7excMLFMHIxBsP/7aukwFof4mtyaKO",
+    "level": 0,
+    "lookingForPets": true,
+    "pet_breed": "Golden Retriever",
+    "pet_size": "Large",
+    "pet_activity_level": "Active",
+    "pet_fenced_yard": false,
+    "pet_gender": "Male",
+    "pet_age": "Adult"
+  }
+]

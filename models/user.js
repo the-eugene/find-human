@@ -15,6 +15,11 @@ const User = new Schema({
     type: String,
     required: true
   },
+  level: {
+    type: Number,
+    required: true,
+    default: 1
+  },
   lookingForPets: {
     type: Boolean,
     required: false
