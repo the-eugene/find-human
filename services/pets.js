@@ -26,10 +26,12 @@ exports.getDogBreedGroups = async () =>
 
 // gets a list of strings for dog temperaments
 exports.getDogTemperaments = async () =>
-  _.uniq((await getAllBreeds())
-    .map(breed => breed.temperament && breed.temperament.split(',')) // map from all info to just temperaments
-    .filter(temperament => !!temperament) // get rid of empty temperaments
-  ).sort();
+  _.uniq([].concat(
+    ...(await getAllBreeds())
+      .map(breed => breed.temperament && breed.temperament.split(','))
+      .filter(temperament => !!temperament)))
+    .sort()
+    .map(t => t.trim());
 
 
 // fetch a dog by breed name
