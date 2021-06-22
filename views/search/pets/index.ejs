@@ -71,7 +71,9 @@
 
         <section class="details">
           <span class="label">Breed</span>
-          <span><%= pet.breed %></span>
+          <span>
+            <a href="/search/pets/details/<%= pet.breed %>"><%= pet.breed %></a>
+          </span>
           <span class="label">Age</span>
           <span><%= pet.age %></span>
           <span class="label">Gender</span>
@@ -83,7 +85,7 @@
         </section>
 
         <div class="actions">
-          <a class="button" href="/search/pets/details/<%= pet.breed %>">Details</a>
+          <a class="button" href="/search/pets/<%= pet._id %>">More info</a>
          <%- include('../../includes/email_button.ejs', {sendTo: pet.ownerId})%>
 
         </div>

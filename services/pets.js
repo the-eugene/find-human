@@ -7,7 +7,7 @@ const url = `${process.env.DOG_API_URL}`;
 
 const getAllBreeds = async () =>
   (await (
-    await fetch(`${url}/breeds?attach_breed=0`, {
+    await fetch(`${url}/breeds`, {
       method: "GET",
       headers: {
         "x-api-key": key
@@ -26,11 +26,12 @@ exports.getDogBreedGroups = async () =>
 
 // gets a list of strings for dog temperaments
 exports.getDogTemperaments = async () =>
-  _.uniq((await getAllBreeds())
-    .map(breed => breed.temperament && breed.temperament.split(',')) // map from all info to just temperaments
-    .filter(temperament => !!temperament) // get rid of empty temperaments
-  ).sort();
-
+  _.uniq([].concat(
+    ...(await getAllBreeds())
+      .map(breed => breed.temperament && breed.temperament.split(','))
+      .filter(temperament => !!temperament)))
+    .sort()
+    .map(t => t.trim());
 
 // fetch a dog by breed name
 exports.getDogByBreed = async (breed) => {
