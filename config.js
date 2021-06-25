@@ -21,4 +21,4 @@ exports.sendgridAPI = process.env.SENDGRID_API_KEY;
 
 exports.dogApiKey = process.env.DOG_API_KEY
 
-exports.dogApiUrl = process.env.DOG_API_URL
+exports.dogApiUrl = "https://api.thedogapi.com/v1/"

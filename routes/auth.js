@@ -7,13 +7,13 @@ router.get('/login', authController.loginForm);
 router.get('/signup', authController.signupForm);
 
 router.post('/login',[
-   body('email','Invalid Email Address').trim().isEmail().bail().normalizeEmail(),
+   body('email','Invalid Email Address').trim().isEmail().bail(),
    body('password', 'Password should have 5 letters or numbers.').trim().isLength({ min: 5 }).isAlphanumeric(),
 ],authController.postLogin);
 
 router.post('/signup',[
     body('name').trim().notEmpty().withMessage("Enter your name"),
-    body('email').trim().isEmail().withMessage('Enter a valid email address').bail().normalizeEmail()
+    body('email').trim().isEmail().withMessage('Enter a valid email address').bail()
         .custom(async (eml)=>{
             if (await require('../models/user').findOne({email: eml})){
                 throw new Error('Email Exists, try logging in instead');
