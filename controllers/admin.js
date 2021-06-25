@@ -1,11 +1,7 @@
 const Pet = require('../models/pet');
-const {
-    getDogBreeds
-} = require('../services/pets');
-
-const {
-    validationBulder
-} = require('../util/util');
+const { getDogBreeds } = require('../services/pets');
+const { getDogTemperaments } = require('../services/pets');
+const { validationBulder } = require('../util/util');
 
 let gBreeds = [];
 
@@ -14,7 +10,6 @@ const getBreeds = () => {
         gBreeds = ['', ...breeds];
     });
 };
-
 getBreeds();
 
 exports.getAddPet = (req, res, next) => {
@@ -30,14 +25,13 @@ exports.getAddPet = (req, res, next) => {
         hasError: false,
         errorMessage: null,
         validationErrors: [],
-        breeds: gBreeds
+        breeds: gBreeds,
+        pet: {}
     });
 };
 
 exports.getPets = (req, res, next) => {
     const page = {
-        // title: "Pet Registration",
-        // path: "/admin/editRegistration",
         style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
@@ -64,13 +58,11 @@ exports.postAddPet = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const name = req.body.name;
     const breed = req.body.breed;
-    const age = req.body.age;
-    const gender = req.body.gender;
-    const activityLevel = req.body.activityLevel;
     const size = req.body.size;
-    const description = req.body.description;
+    const gender = req.body.gender;
+    const age = req.body.age;
     const specialNeeds = req.body.specialNeeds;
-    const adoptionFee = req.body.adoptionFee;
+    const description = req.body.description;    
     const errors = validationBulder(req);
 
     const page = {
@@ -90,17 +82,13 @@ exports.postAddPet = (req, res, next) => {
                 imageUrl: imageUrl,
                 name: name,
                 breed: breed,
-                age: age,
-                gender: gender,
-                activityLevel: activityLevel,
                 size: size,
+                gender: gender,
+                age: age,
+                specialNeeds: specialNeeds,                
                 description: description,
-                specialNeeds: specialNeeds,
-                adoptionFee: adoptionFee,
                 message: req.flash('message')
             },
-            // errorMessage: errors.array()[0].msg,
-            // validationErrors: errors.array()
         });
     }
 
@@ -109,13 +97,11 @@ exports.postAddPet = (req, res, next) => {
         imageUrl: imageUrl,
         name: name,
         breed: breed,
-        age: age,
-        gender: gender,
-        activityLevel: activityLevel,
         size: size,
+        gender: gender,
+        age: age,
+        specialNeeds: specialNeeds,        
         description: description,
-        specialNeeds: specialNeeds,
-        adoptionFee: adoptionFee,
         ownerId: req.user._id
     });
     pet
@@ -149,10 +135,9 @@ exports.getEditPet = (req, res, next) => {
             if (!pet) {
                 return res.redirect('/');
             }
+            console.log(pet);
             res.render('admin/editRegistration', {
                 page,
-                // pageTitle: 'Edit Pet',
-                // path: '/admin/edit-pet',
                 editing: editMode,
                 pet: pet,
                 breeds: gBreeds,
@@ -173,18 +158,17 @@ exports.postEditPet = (req, res, next) => {
     const updatedImageUrl = req.body.imageUrl;
     const updatedname = req.body.name;
     const updatedBreed = req.body.breed;
-    const updatedAge = req.body.age;
-    const updatedGender = req.body.gender;
-    const updatedActivityLevel = req.body.activityLevel;
     const updatedSize = req.body.size;
+    const updatedGender = req.body.gender;
+    const updatedAge = req.body.age;
+    const updatedSpecialNeeds = req.body.specialNeeds;    
     const updatedDesc = req.body.description;
-    const updatedSpecialNeeds = req.body.specialNeeds;
-    const updatedAdoptionFee = req.body.adoptionFee;
 
     const errors = validationBulder(req);
 
     if (errors.length != 0) {
         return res.status(422).render('admin/edit-pet', {
+            page,
             pageTitle: 'Edit Pet',
             path: '/admin/edit-pet',
             editing: true,
@@ -193,17 +177,13 @@ exports.postEditPet = (req, res, next) => {
                 imageUrl: updatedImageUrl,
                 name: updatedname,
                 breed: updatedBreed,
-                age: updatedAge,
-                gender: updatedGender,
-                activityLevel: updatedActivityLevel,
                 size: updatedSize,
+                gender: updatedGender,
+                age: updatedAge,
+                specialNeeds: updatedSpecialNeeds,                
                 description: updatedDesc,
-                specialNeeds: updatedSpecialNeeds,
-                adoptionFee: updatedAdoptionFee,
                 _id: petId
             },
-            errorMessage: errors.array()[0].msg,
-            validationErrors: errors.array()
         });
     }
 
@@ -215,13 +195,11 @@ exports.postEditPet = (req, res, next) => {
             pet.imageUrl = updatedImageUrl;
             pet.name = updatedname;
             pet.breed = updatedBreed;
-            pet.age = updatedAge;
-            pet.gender = updatedGender;
-            pet.activityLevel = updatedActivityLevel;
             pet.size = updatedSize;
+            pet.gender = updatedGender;
+            pet.age = updatedAge;
+            pet.specialNeeds = updatedSpecialNeeds;            
             pet.description = updatedDesc;
-            pet.specialNeeds = updatedSpecialNeeds;
-            pet.adoptionFee = updatedAdoptionFee;
 
             return pet.save().then(result => {
                 console.log('UPDATED PET!');

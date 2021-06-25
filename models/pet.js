@@ -22,10 +22,6 @@ const Pet = new Schema({
     type: String,
     required: true
   },
-  activityLevel: {
-    type: String,
-    required: true
-  },
   size: {
     type: String,
     required: true
@@ -36,11 +32,6 @@ const Pet = new Schema({
   },
   specialNeeds: { // not required
     type: String,
-  },
-
-  adoptionFee: { 
-    type: Number,
-    required: true,
   },
   ownerId: {
     type: Schema.Types.ObjectId,

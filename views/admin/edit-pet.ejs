@@ -3,31 +3,25 @@
         <%- include('../includes/nav.ejs') %>
 
             <main>
+                <h1>Dogs I have registered for adoption:</h1><br><br>
                 <% if (pets.length > 0) { %>
                     <div class="grid">
                         <% for (let pet of pets) { %>
                             <article class="card pet-item">
-                                <header class="card__header">
-                                    <h1 class="pet__name">
-                                        <%= pet.name %>
-                                    </h1>
-                                </header>
                                 <div class="card__image">
                                     <img src="<%= pet.imageUrl %>" alt="<%= pet.name %>">
                                 </div>
                                 <div class="card__content">
-                                    <h2 class="pet__name">$
+                                    <h1 class="pet__name">Name: 
                                         <%= pet.name %>
+                                    </h1>
+                                    <h2 class="pet__temperament">Temperament:
+                                        <%= pet.temperament %>
                                     </h2>
-
-                                    <h2 class="pet__breed">$
-                                        <%= pet.breed %>
+                                    <h2 class="pet__age">Age:
+                                        <%= pet.age %>
                                     </h2>
-
-                                    <h2 class="pet__adoptionFee">$
-                                        <%= pet.adoptionFee %>
-                                    </h2>
-                                    <p class="pet__description">
+                                    <p class="pet__description">Description:
                                         <%= pet.description %>
                                     </p>
                                 </div>
@@ -36,7 +30,7 @@
                                     <form action="/admin/delete-pet" method="POST">
                                         <input type="hidden" value="<%= pet._id %>" name="petId">
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <button class="btn" type="submit">Delete</button>
+                                        <button class="btn" type="submit">Remove</button>
                                     </form>
 
                                 </div>
