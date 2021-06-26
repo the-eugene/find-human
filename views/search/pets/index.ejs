@@ -64,33 +64,7 @@
 
     <div class="twocol">
       <% data.forEach(pet=>{ %>
-      <article class="card simple">
-
-        <h2><%=pet.name%></h2>
-        <img src="<%= pet.imageUrl %>">
-
-        <section class="details">
-          <span class="label">Breed</span>
-          <span>
-            <a href="/search/pets/details/<%= pet.breed %>"><%= pet.breed %></a>
-          </span>
-          <span class="label">Age</span>
-          <span><%= pet.age %></span>
-          <span class="label">Gender</span>
-          <span><%= pet.gender %></span>
-          <span class="label">Size</span>
-          <span><%= pet.size %></span>
-          <span class="label">Activity Level</span>
-          <span><%= pet.activityLevel %></span>
-        </section>
-
-        <div class="actions">
-          <a class="button" href="/search/pets/<%= pet._id %>">More info</a>
-         <%- include('../../includes/email_button.ejs', {sendTo: pet.ownerId})%>
-
-        </div>
-
-      </article>
+        <%- include(__dirname+'/views/includes/pet_card.ejs', {pet: pet})%>
       <% }); %>
     </div>
   </main>

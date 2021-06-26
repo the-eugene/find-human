@@ -113,6 +113,11 @@ table {
     gap: 10px;
   }
 
+  .v-center{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
 
   .row form{display: contents;}
   .row>*, .row a, .row input, .row button{flex-grow: 1; border-radius: 5px;}
