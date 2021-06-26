@@ -1,7 +1,7 @@
 require('dotenv').config({path: __dirname + '/.env'})
 
 exports.corsOptions = {
-  origin: "https://calm-sea-31768.herokuapp.com/",
+  origin: "https://https://find-human.herokuapp.com/",
   optionsSuccessStatus: 200
 };
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs'); %>
+<body>
+    <%- include('../includes/nav.ejs'); %>
+<main>
+    <%- include('../includes/message.ejs'); %>
+    <div class="twocol">
+        <div class="v-center">
+            <h1>About Find Human</h1>
+            <p>Are you a dog or cat who needs to adopt a human? You’ve come to the
+                right place. We know you deserve the most loving and caring lifelong
+                companion. Whatever your age, breed, or history, FindHuman is
+                dedicated to finding you a human and a home that you deserve.</p>
+        </div>
+        <%- include(__dirname+'/views/includes/pet_card.ejs', {pet: data})%>
+    </div>  
+</main>
+</body>
+</html>
