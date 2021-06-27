@@ -1,99 +1,25 @@
-const Book=require('../models/book');
-const Order=require('../models/order');
+const Pet = require('../models/pet');
 
-exports.getProducts = (req, res, next) => {
+exports.getHome =  async (req, res, next) => {
     const page={
-        title:"All Products",
-        path: "/products",
-        style:["pretty","products"]
+        title:"Home Page",
+        path: "/",
+        style:["pretty","search"]
     }
-    Book.find()
-    .then(data=>{res.render('shop/store',{'data': data,page:page});});
+    res.render('home/home',{'data':await getRandomPet(req), page:page});
 };
 
-exports.getProductDetail=(req, res, next)=>{
-    const page={
-        path: "/products",
-        style:["pretty","products"]
+ async function getRandomPet(req) {
+    //TODO: move to model?
+    //let data= await Pet.aggregate([{$sampe:{size: 3}}]); //$sampe is not allowed in free mongodb atlas tier:(
+
+    let total=await Pet.countDocuments();
+    if(!req.session.cur_rnd_pet){
+        req.session.cur_rnd_pet=Math.floor(Math.random()*total); //start with a random pet
     }
-    console.log("Loading ",req.params.isbn);
-    Book.findOne({isbn:req.params.isbn}).then(data=>{
-        if(data){
-            page.title=data.title;
-            data.isOwner=req.user && data.isOwner(req.user._id);
-            res.render('shop/detail',{'book': data,page:page});
-        } else {
-            next();
-        }
-    }).catch(err => next(new Error(err)));
+    else {
+        req.session.cur_rnd_pet=(req.session.cur_rnd_pet+1)%total; //serve next pet each time home is visited
+    }
+    return Pet.findOne().skip(req.session.cur_rnd_pet);
 }
-
-exports.getCart = async (req, res, next) => {
-    const page={
-        title:"Shopping Cart",
-        path: "/cart",
-        style:["pretty","products"]
-    }
-    if(req.user.level>0){ //user exists in db, not just session
-        try{
-            await req.user.populate('cart.items.bookId').execPopulate()
-        } catch(e) {next(e);}
-    }
-    res.render('shop/cart', {
-                page: page,
-                data: req.user.cart.items
-            });
-  };
-
-exports.AddCart = (req, res, next) => {
-    Book.findOne({isbn:req.body.isbn})
-      .then(book => {
-        return req.user.addToCart(book);
-      })
-    .then(result => {
-        res.redirect('/cart');
-    });
-};
-
-  
-exports.delBookCart = (req, res, next) => {
-req.user.deleteFromCart(req.body.id)
-.then(result => {res.redirect('/cart');})
-.catch(err => next(new Error(err)));
-};
-  
-exports.postOrder = async (req, res, next) => {
-    try{
-    const user=await req.user.populate('cart.items.bookId').execPopulate()
-    const items = user.cart.items.map(i => {
-        return { quantity: i.quantity, book: { ...i.bookId._doc } };
-    });
-
-    await new Order({
-        user: {name: req.user.name, userId: req.user },
-        items: items
-    }).save();
-
-    req.user.clearCart();
-    res.redirect('/orders');
-    }  catch(e) {next(e);}
-}
-  
-exports.getOrders = async (req, res, next) => {
-    const page={
-        title:"Orders",
-        path: "/orders",
-        style:["pretty"]
-    }
-    try{
-    const orders = await Order.find({ 'user.userId': req.user._id });
-    res.render('shop/orders', {
-            page: page,
-            data: orders
-        });
-    } catch(e){
-        console.error('Orders failed to load');
-        next();
-    }
-};
   

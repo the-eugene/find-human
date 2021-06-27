@@ -6,7 +6,8 @@ router.get('/humans', isUser, search.getHumans);
 router.post('/humans', isUser, search.postHumans);
 router.get('/pets', isUser, search.getPets);
 router.post('/pets', isUser, search.postPets);
-router.get('/pets/details/:breed', isUser, search.getPetDetails)
+router.get('/pets/details/:breed', isUser, search.getBreedDetails)
+router.get('/pets/:petId', isUser, search.getPetDetails)
 
 //router.get('/book/:isbn',home.getProductDetail);
 

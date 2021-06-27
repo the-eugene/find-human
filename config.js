@@ -1,7 +1,7 @@
 require('dotenv').config({path: __dirname + '/.env'})
 
 exports.corsOptions = {
-  origin: "https://calm-sea-31768.herokuapp.com/",
+  origin: "https://https://find-human.herokuapp.com/",
   optionsSuccessStatus: 200
 };
 
@@ -21,4 +21,4 @@ exports.sendgridAPI = process.env.SENDGRID_API_KEY;
 
 exports.dogApiKey = process.env.DOG_API_KEY
 
-exports.dogApiUrl = process.env.DOG_API_URL
+exports.dogApiUrl = "https://api.thedogapi.com/v1/"

@@ -26,7 +26,7 @@ mongoose.connect(config.mongoURI, config.mongooseOptions).then(() => {
 function routeTable(app) {
   const fallback = require('./controllers/default')
   mkRoute(app, '/admin');
-  mkRoute(app, '/', 'store');
+  mkRoute(app, '/', 'home');
   mkRoute(app, '/', 'auth');
   mkRoute(app, '/search');
   mkRoute(app, '/email');
@@ -58,7 +58,8 @@ function setupApp(app) {
     .use(require('cors')(config.corsOptions))
     .use(require('connect-flash')())
 
-    .use(async (req, res, next) => {      
+    .use(async (req, res, next) => { 
+      res.locals.__dirname=__dirname;     
       res.locals.dogBreeds = await BreedsApi.getDogBreeds();
       res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();      
 
