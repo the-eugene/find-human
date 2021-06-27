@@ -63,6 +63,7 @@ const getAllBreeds = async () =>{
     })
   ).json());
 }
+
 // returns a list of all breed names
 exports.getDogBreeds = async () =>
   (await getAllBreeds()).map(breed => breed.name);

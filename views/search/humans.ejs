@@ -9,58 +9,23 @@
 
     <section class="search">
       <form action="/search/humans" method="POST">
-        <div class="filter">
-          <label for="pet_breed">Breed</label>
-          <select id="pet_breed" name="pet_breed">
-            <option></option>
-            <option <% if(searchParams.pet_breed == "German Shepard") {%> selected <%}%>>German Shepard</option>
-            <option <% if(searchParams.pet_breed == "Golden Retriever") {%> selected <%}%>>Golden Retriever</option>
-            <option <% if(searchParams.pet_breed == "Mix") {%> selected <%}%>>Mix</option>
-          </select>
+        <div class="filter">         
+          <%- include('../includes/controls/breed_select.ejs'); %>         
         </div>
         <div class="filter">
-          <label for="pet_size">Size</label>
-          <select id="pet_size" name="pet_size">
-            <option></option>
-            <option <% if(searchParams.pet_size == "Large") {%> selected <%}%>>Large</option>
-            <option <% if(searchParams.pet_size == "Medium") {%> selected <%}%>>Medium</option>
-            <option <% if(searchParams.pet_size == "Small") {%> selected <%}%>>Small</option>
-          </select>
+          <%- include('../includes/controls/size_select.ejs'); %>   
         </div>
         <div class="filter">
-          <label for="pet_activity_level">Activity Level</label>
-          <select id="pet_activity_level" name="pet_activity_level">
-            <option></option>
-            <option <% if(searchParams.pet_activity_level == "Active") {%> selected <%}%>>Active</option>
-            <option <% if(searchParams.pet_activity_level == "Normal") {%> selected <%}%>>Normal</option>
-            <option <% if(searchParams.pet_activity_level == "Lethargic") {%> selected <%}%>>Lethargic</option>
-          </select>
+          <%- include('../includes/controls/activityLevel_select.ejs'); %> 
         </div>
         <div class="filter">
-          <label for="pet_fenced_yard">Needs Fenced Yard</label>
-          <select id="pet_fenced_yard" name="pet_fenced_yard">
-            <option></option>
-            <option <% if(searchParams.pet_fenced_yard === true) {%> selected <%}%>>Yes</option>
-            <option <% if(searchParams.pet_fenced_yard === false) {%> selected <%}%>>No</option>
-          </select>
+          <%- include('../includes/controls/fencedYard_select.ejs'); %>
         </div>
         <div class="filter">
-          <label for="pet_gender">Gender</label>
-          <select id="pet_gender" name="pet_gender">
-            <option></option>
-            <option <% if(searchParams.pet_gender == "Male") {%> selected <%}%>>Male</option>
-            <option <% if(searchParams.pet_gender == "Female") {%> selected <%}%>>Female</option>
-          </select>
+          <%- include('../includes/controls/gender_select.ejs'); %>
         </div>
         <div class="filter">
-          <label for="pet_age">Age</label>
-          <select id="pet_age" name="pet_age">
-            <option></option>
-            <option <% if(searchParams.pet_age == "Puppy") {%> selected <%}%>>Puppy</option>
-            <option <% if(searchParams.pet_age == "Adolescent") {%> selected <%}%>>Adolescent</option>
-            <option <% if(searchParams.pet_age == "Adult") {%> selected <%}%>>Adult</option>
-            <option <% if(searchParams.pet_age == "Senior") {%> selected <%}%>>Senior</option>
-          </select>
+          <%- include('../includes/controls/age_select.ejs'); %>
         </div>
         <div class="filter">
           <button class="button" type="submit">Search</button>

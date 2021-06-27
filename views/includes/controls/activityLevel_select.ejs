@@ -1,0 +1,8 @@
+<label for="activityLevel">Temperament</label>
+<select id="activityLevel" name="activityLevel">
+  <option></option>
+  <% dogTemperaments.map(temperament => { %>
+    <option <% if (searchParams.activityLevel !== undefined && searchParams.activityLevel.trim() === temperament.trim()) { %> selected <% }%>> <%= temperament %></option>
+  <% }) %>
+</select>
+<%= searchParams.activityLevel %>

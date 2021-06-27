@@ -1,0 +1,6 @@
+<label for="fenced_yard">Needs Fenced Yard</label>
+<select id="fenced_yard" name="fenced_yard">
+  <option></option>
+  <option <% if(searchParams.fenced_yard === true) {%> selected <%}%>>Yes</option>
+  <option <% if(searchParams.fenced_yard === false) {%> selected <%}%>>No</option>
+</select>

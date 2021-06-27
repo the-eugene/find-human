@@ -1,0 +1,7 @@
+<label for="size">Size</label>
+<select id="size" name="size">
+  <option></option>
+  <option <% if(searchParams.size == "Large") {%> selected <%}%>>Large</option>
+  <option <% if(searchParams.size == "Medium") {%> selected <%}%>>Medium</option>
+  <option <% if(searchParams.size == "Small") {%> selected <%}%>>Small</option>
+</select>
