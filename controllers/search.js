@@ -1,15 +1,48 @@
 const User = require('../models/user');
 const Pet = require('../models/pet');
-const {getDogByBreed, getBreedImageByImageId} = require('../services/pets');
+const {
+    getDogByBreed,
+    getBreedImageByImageId
+} = require('../services/pets');
+
+// for pagination
+const NUMBER_PER_PAGE = 2;
 
 exports.getHumans = (req, res, next) => {
+    const currentPage = +req.query.page || 1; // get the current page the user is viewing
+    let totalHuman;
+
     const page = {
         title: "Search Humans",
         path: "/search/humans",
         style: ["pretty", "search"]
     }
-    User.find({ lookingForPets: true })
-        .then(data => { res.render('search/humans', { 'data': data, page: page, searchParams: {} }); });
+
+    User.find({
+            lookingForPets: true
+        })
+        .countDocuments()
+        .then(numberOfHuman => {
+            totalHuman = numberOfHuman;
+            return User.find({
+                lookingForPets: true
+            })
+                .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
+                .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
+        })
+        .then(data => {
+            res.render('search/humans', {
+                'data': data,
+                page: page,
+                searchParams: {},
+                currentPage: currentPage,
+                hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
+                hasPreviousPage: currentPage > 1,
+                nextPage: currentPage + 1,
+                previousPage: currentPage - 1,
+                lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+            });
+        });
 };
 
 exports.postHumans = (req, res, next) => {
@@ -59,13 +92,36 @@ exports.postHumans = (req, res, next) => {
 };
 
 exports.getPets = async (req, res, next) => {
+    const currentPage = +req.query.page || 1; // get the current page the user is viewing
+    let totalPets;
+
     const page = {
         title: "Find Pets",
         path: "/search/pets",
         style: ["pretty", "search"]
     }
+
     Pet.find()
-        .then(data => { res.render('search/pets', { 'data': data, page: page, searchParams: {} }); });
+        .countDocuments()
+        .then(numberOfPets => {
+            totalPets = numberOfPets;
+            return Pet.find()
+                .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
+                .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
+        })
+        .then(data => {
+            res.render('search/pets', {
+                'data': data,
+                page: page,
+                searchParams: {},
+                currentPage: currentPage,
+                hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
+                hasPreviousPage: currentPage > 1,
+                nextPage: currentPage + 1,
+                previousPage: currentPage - 1,
+                lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+            });
+        });
 };
 
 exports.postPets = (req, res, next) => {
@@ -75,7 +131,7 @@ exports.postPets = (req, res, next) => {
         style: ["pretty", "search"]
     }
 
-    searchParams = { }
+    searchParams = {}
     if (req.body.breed !== "") {
         searchParams.breed = req.body.breed;
     }
@@ -87,18 +143,26 @@ exports.postPets = (req, res, next) => {
     }
     if (req.body.gender !== "") {
         searchParams.gender = req.body.gender;
-    }    
+    }
     if (req.body.age !== "") {
         searchParams.age = req.body.age;
     }
 
     console.log(searchParams)
     Pet.find(searchParams)
-        .then(data => { res.render('search/pets', { 'data': data, page: page, searchParams: searchParams }); });
+        .then(data => {
+            res.render('search/pets', {
+                'data': data,
+                page: page,
+                searchParams: searchParams
+            });
+        });
 };
 
 exports.getBreedDetails = async (req, res, next) => {
-    const {breed} = req.params;
+    const {
+        breed
+    } = req.params;
     if (!breed) res.redirect("/search/pets");
 
     const page = {
@@ -111,7 +175,11 @@ exports.getBreedDetails = async (req, res, next) => {
     const src = await getBreedImageByImageId(breedInfo.reference_image_id);
 
     if (breedInfo && breedInfo.name) {
-        res.render('search/pets/breedDetails', {breedInfo: breedInfo, page: page, src: src });
+        res.render('search/pets/breedDetails', {
+            breedInfo: breedInfo,
+            page: page,
+            src: src
+        });
     } else {
         res.redirect("/search/pets");
     }
@@ -119,7 +187,9 @@ exports.getBreedDetails = async (req, res, next) => {
 
 
 exports.getPetDetails = async (req, res, next) => {
-    const {petId} = req.params;
+    const {
+        petId
+    } = req.params;
     if (!petId) res.redirect("/search/pets");
 
     const page = {
@@ -129,12 +199,14 @@ exports.getPetDetails = async (req, res, next) => {
     };
 
     Pet.findById(petId)
-      .then(petInfo => {
-          if (petInfo && petInfo.name) {
-              return res.render('search/pets/petDetails', {dog: petInfo, page: page});
-          } else {
-              return res.redirect("/search/pets");
-          }
-      });
+        .then(petInfo => {
+            if (petInfo && petInfo.name) {
+                return res.render('search/pets/petDetails', {
+                    dog: petInfo,
+                    page: page
+                });
+            } else {
+                return res.redirect("/search/pets");
+            }
+        });
 }
-
