@@ -14,7 +14,7 @@
             </div>
 
             <div class="form-control name">
-                <label for="name">Name</label><br>
+                <label for="name">Name</label>
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
                     type="text" name="name" id="name" 
@@ -22,7 +22,7 @@
             </div>
 
             <div class="form-control imageUrl">
-                <label for="imageUrl">Image URL</label><br>
+                <label for="imageUrl">Image URL</label>
                 <input 
                     class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
                     type="text" 
@@ -48,51 +48,20 @@
 
 
 
-            <div class="form-control breed">
-                <label for="breed">Breed</label><br>              
-                <select class="<%= validationErrors.find(e => e.param === 'breed') ? 'invalid' : '' %>"
-                   id="breed"  
-                name="breed">
-                <% for (let breed of breeds) { %>                    
-                    <option value="<%= breed %>" <%= breed === pet.breed && 'selected' %>><%= breed %></option>
-                <% } %>
-                </select>
+            <div class="form-control breed">               
+                <%- include('../includes/controls/breed_select.ejs'); %>
             </div>
 
             <div class="form-control size">
-                <label for="size">Size</label><br>
-                <select 
-                    class="<%= validationErrors.find(e => e.param === 'size') ? 'invalid' : '' %>"
-                    name="size" id="size" required >
-                    <option></option>
-                    <option value="small" <%= 'small' === pet.size && 'selected' %>>Small</option>
-                    <option value="medium" <%= 'medium' === pet.size && 'selected' %>>Medium</option>
-                    <option value="large" <%= 'large' === pet.size && 'selected' %>>Large</option>
-                </select>
+                <%- include('../includes/controls/size_select.ejs'); %>
             </div>
 
             <div class="form-control gender">
-                <label for="gender">Gender</label><br>
-                <select 
-                    class="<%= validationErrors.find(e => e.param === 'gender') ? 'invalid' : '' %>"
-                    name="gender" id="gender" required>
-                    <option></option>
-                    <option value="female" <%= 'female' === pet.gender && 'selected' %>>Female</option>
-                    <option value="male" <%= 'male' === pet.gender && 'selected' %>>Male</option>
-                </select>
+                <%- include('../includes/controls/gender_select.ejs'); %>
             </div>
 
             <div class="form-control age">
-                <label for="age">Age</label><br>
-                <select 
-                    class="<%= validationErrors.find(e => e.param === 'age') ? 'invalid' : '' %>"
-                    name="age" id="age" required>
-                    <option></option>
-                    <option value="puppy" <%= 'puppy' === pet.age && 'selected' %>>Puppy</option>
-                    <option value="adolescent" <%= 'adolescent' === pet.age && 'selected' %>>Adolescent</option>
-                    <option value="adult" <%= 'adult' === pet.age && 'selected' %>>Adult</option>
-                    <option value="senior" <%= 'senior' === pet.age && 'selected' %>>Senior</option>
-                </select>
+                <%- include('../includes/controls/age_select.ejs'); %>
             </div>
 
             <div class="imageDisplay">
@@ -100,7 +69,7 @@
             </div>
 
             <div class="form-control specialNeeds">
-                <label for="specialNeeds">Special Needs</label><br>
+                <label for="specialNeeds">Special Needs</label>
                 <textarea 
                     class="<%= validationErrors.find(e => e.param === 'specialNeeds') ? 'invalid' : '' %>"
                     name="specialNeeds" 
@@ -109,7 +78,7 @@
             </div>       
 
             <div class="form-control description">
-                <label for="description">Description</label><br>
+                <label for="description">Description</label>
                 <textarea 
                     class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
                     name="description" 

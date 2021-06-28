@@ -1,5 +1,5 @@
 <label for="gender">Gender</label>
-<select id="gender" name="gender">
+<select id="gender" name="gender" <% if (searchParams.required) { %> required <% }%>>
   <option></option>
   <option <% if(searchParams.gender == "Male") {%> selected <%}%>>Male</option>
   <option <% if(searchParams.gender == "Female") {%> selected <%}%>>Female</option>

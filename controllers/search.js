@@ -19,8 +19,6 @@ exports.postHumans = (req, res, next) => {
         style: ["pretty", "search"]
     }
 
-    console.log("request body:");
-    console.log(req.body);
     let searchParams = { lookingForPets: true }
     let filterParams = { lookingForPets: true }
     if (req.body.breed !== "") {        
@@ -32,8 +30,6 @@ exports.postHumans = (req, res, next) => {
         filterParams.size = req.body.size;
     }
     if (req.body.activityLevel !== "") {
-        console.log("req.body.activityLevel");
-        console.log(req.body.activityLevel);
         searchParams.pet_activity_level = req.body.activityLevel;
         filterParams.activityLevel = req.body.activityLevel;
     }
@@ -49,8 +45,7 @@ exports.postHumans = (req, res, next) => {
         searchParams.pet_age = req.body.age;
         filterParams.age = req.body.age;
     }
-    console.log(searchParams);
-    console.log(filterParams);
+
     User.find(searchParams)
         .then(data => {
             console.log("User Find results: " + data);

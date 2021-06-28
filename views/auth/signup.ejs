@@ -38,58 +38,20 @@
                 <input type="checkbox" onclick="petDetails()" id="lookingForPets" name="lookingForPets" value="Yes">
             </div>
             <div id="petQuestions" style="display:none">
-                <div>
-                    <label for="pet_breed">Breed</label>
-                    <select id="pet_breed" name="pet_breed">
-                        <option></option>
-                        <option>German Shepard</option>
-                        <option>Golden Retriever</option>
-                        <option>Mix</option>
-                    </select>
+                <div class="form-control breed">               
+                    <%- include('../includes/controls/breed_select.ejs'); %>
                 </div>
-                <div>
-                    <label for="size">Size</label>
-                    <select id="size" name="size">
-                        <option></option>
-                        <option>Large</option>
-                        <option>Medium</option>
-                        <option>Small</option>
-                    </select>
+    
+                <div class="form-control size">
+                    <%- include('../includes/controls/size_select.ejs'); %>
                 </div>
-                <div>
-                    <label for="pet_activity_level">Activity Level</label>
-                    <select id="pet_activity_level" name="pet_activity_level">
-                        <option></option>
-                        <option>Active</option>
-                        <option>Normal</option>
-                        <option>Lethargic</option>
-                    </select>
+    
+                <div class="form-control gender">
+                    <%- include('../includes/controls/gender_select.ejs'); %>
                 </div>
-                <div>
-                    <label for="pet_fenced_yard">Needs Fenced Yard</label>
-                    <select id="pet_fenced_yard" name="pet_fenced_yard">
-                        <option></option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="pet_gender">Gender</label>
-                    <select id="pet_gender" name="pet_gender">
-                        <option></option>
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="pet_age">Age</label>
-                    <select id="pet_age" name="pet_age">
-                        <option></option>
-                        <option>Puppy</option>
-                        <option>Adolescent</option>
-                        <option>Adult</option>
-                        <option>Senior</option>
-                    </select>
+    
+                <div class="form-control age">
+                    <%- include('../includes/controls/age_select.ejs'); %>
                 </div>
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">

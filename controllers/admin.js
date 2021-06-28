@@ -26,7 +26,8 @@ exports.getAddPet = (req, res, next) => {
         errorMessage: null,
         validationErrors: [],
         breeds: gBreeds,
-        pet: {}
+        pet: {},
+        searchParams: { required: true }
     });
 };
 

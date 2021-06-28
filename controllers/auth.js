@@ -34,15 +34,15 @@ exports.postSignup = async (req, res, next) => {
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, 12),
         lookingForPets: req.body.lookingForPets == "Yes" ? true : false,
-        pet_breed: req.body.pet_breed,
-        size: req.body.size,
-        pet_activity_level: req.body.pet_activity_level,
-        pet_fenced_yard: req.body.pet_fenced_yard == "Yes" ? true : false,
-        pet_gender: req.body.pet_gender,
-        pet_age: req.body.pet_age
+        pet_breed: req.body.breed,
+        pet_size: req.body.size,
+        pet_activity_level: req.body.activityLevel,
+        pet_fenced_yard: req.body.fenced_yard == "Yes" ? true : false,
+        pet_gender: req.body.gender,
+        pet_age: req.body.age
     }
 
-    console.log(req.body.pet_breed)
+    console.log(req.body.breed)
 
     if (validationResult(req).isEmpty()){
         (new User({...changes, cart: { items: [] }})).save();
@@ -64,14 +64,15 @@ exports.logout = (req, res, next) => {
 };
 
 function renderSignup(req, res, data={name:'', email:''}){
+    const searchParams = {required: true};
     const page={
         title:"Sign Up",
         path: "/signup",
         style:["pretty","form"],
         message: req.flash('message'),
-        data: data
+        data: data        
     }
-    res.render('auth/signup',{page:page});
+    res.render('auth/signup',{page:page, searchParams: searchParams});
 }
 
 function renderLoginForm(req, res, data={}){
