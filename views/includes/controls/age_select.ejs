@@ -1,0 +1,8 @@
+<label for="age">Age</label>
+<select id="age" name="age" <% if (searchParams.required) { %> required <% }%>>
+  <option></option>
+  <option <% if(searchParams.age == "Puppy") {%> selected <%}%>>Puppy</option>
+  <option <% if(searchParams.age == "Adolescent") {%> selected <%}%>>Adolescent</option>
+  <option <% if(searchParams.age == "Adult") {%> selected <%}%>>Adult</option>
+  <option <% if(searchParams.age == "Senior") {%> selected <%}%>>Senior</option>
+</select>

@@ -1,0 +1,8 @@
+<label for="breed">Breed</label>
+<select id="breed" name="breed" <% if (searchParams.required) { %> required <% }%>>
+  <option></option>
+  <% dogBreeds.map(breed => { %>
+    <option <% if (searchParams.breed === breed) { %> selected <% } %>> <%= breed %></option>
+  <% }) %>  
+</select>
+

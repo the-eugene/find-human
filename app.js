@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const {getDogBreeds, getDogTemperaments} = require('./services/pets');
+const {getDogTemperaments, BreedsApi} = require('./services/pets');
 
 const User = require('./models/user');
 
@@ -58,10 +58,11 @@ function setupApp(app) {
     .use(require('cors')(config.corsOptions))
     .use(require('connect-flash')())
 
-    .use(async (req, res, next) => {
-      res.locals.__dirname=__dirname;
-      res.locals.dogBreeds = await getDogBreeds();
-      res.locals.dogTemperaments = await getDogTemperaments();
+    .use(async (req, res, next) => { 
+      res.locals.__dirname=__dirname;     
+      res.locals.dogBreeds = await BreedsApi.getDogBreeds();
+      res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();      
+
         if(req.session.user){
             try{
                 req.user = await User.findById(req.session.user._id);

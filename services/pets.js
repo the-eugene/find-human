@@ -2,36 +2,64 @@ const fetch = require('node-fetch');
 const _=require('lodash');
 const config=require('../config')
 
-const key = process.env.DOG_API_KEY;
-const url = config.dogApiUrl;
+const key = config.dogApiKey;
+const url = `${config.dogApiUrl}`;
 
-const getAllBreeds = async () =>
-  (await (
-    await fetch(`${url}/breeds`, {
-      method: "GET",
-      headers: {
-        "x-api-key": key
-      },
-    })
-  ).json());
+class BreedsApi {
+  constructor() {
+    this.breeds = [];
+    this.breedTemperaments = [];
+    
+  }
 
-// returns a list of all breed names
-exports.getDogBreeds = async () =>
-  (await getAllBreeds()).map(breed => breed.name);
+  getAllBreeds = async () =>{
+    if(this.breeds.length > 0)  {      
+      return this.breeds;      
+    }
+   
+    this.breeds = (await (
+      await fetch(`${url}/breeds?attach_breed=0`, {
+        method: "GET",
+        headers: {
+          "x-api-key": key
+        },
+      })
+    ).json());
+
+    //console.log(this.breeds);
+    return this.breeds;
+  };
+
+  getDogBreeds = async () => (await this.getAllBreeds()).map(breed => breed.name);
+
+  // gets a list of strings for dog temperaments
+  getDogTemperaments = async () => {
+    if(this.breedTemperaments > 0) {
+      return this.breedTemperaments;
+    }
+    
+    let list = _.uniq((await this.getAllBreeds())
+      .map(breed => breed.temperament && breed.temperament.split(',')) // map from all info to just temperaments
+      .filter(temperament => !!temperament) // get rid of empty temperaments
+    ).sort();
+
+
+    list.forEach(x => this.breedTemperaments.push(...x));
+    this.breedTemperaments = _.uniq(this.breedTemperaments).sort();
+    return this.breedTemperaments;
+  }
+}
+
+exports.BreedsApi = new BreedsApi();
+
 
 // returns a list of all breed_group names
 exports.getDogBreedGroups = async () =>
   _.uniq((await getAllBreeds()).map(breed => breed.breed_group)).sort()
     .filter(breed => !!breed);
 
-// gets a list of strings for dog temperaments
-exports.getDogTemperaments = async () =>
-  _.uniq([].concat(
-    ...(await getAllBreeds())
-      .map(breed => breed.temperament && breed.temperament.split(','))
-      .filter(temperament => !!temperament)))
-    .sort()
-    .map(t => t.trim());
+
+
 
 // fetch a dog by breed name
 exports.getDogByBreed = async (breed) => {

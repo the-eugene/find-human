@@ -54,35 +54,42 @@ exports.postHumans = (req, res, next) => {
         style: ["pretty", "search"]
     }
 
-    let searchParams = {
-        lookingForPets: true
+    let searchParams = { lookingForPets: true }
+    let filterParams = { lookingForPets: true }
+    if (req.body.breed !== "") {        
+        searchParams.pet_breed = req.body.breed;
+        filterParams.breed = req.body.breed;
     }
-    if (req.body.pet_breed !== "") {
-        searchParams.pet_breed = req.body.pet_breed;
+    if (req.body.size !== "") {
+        searchParams.pet_size = req.body.size;
+        filterParams.size = req.body.size;
     }
-    if (req.body.pet_size !== "") {
-        searchParams.pet_size = req.body.pet_size;
+    if (req.body.activityLevel !== "") {
+        searchParams.pet_activity_level = req.body.activityLevel;
+        filterParams.activityLevel = req.body.activityLevel;
     }
-    if (req.body.pet_activity_level !== "") {
-        searchParams.pet_activity_level = req.body.pet_activity_level;
+    if (req.body.gender !== "") {
+        searchParams.pet_gender = req.body.gender;
+        filterParams.gender = req.body.gender;
     }
-    if (req.body.pet_gender !== "") {
-        searchParams.pet_gender = req.body.pet_gender;
+    if (req.body.fenced_yard !== "") {
+        searchParams.pet_fenced_yard = req.body.fenced_yard == "Yes" ? true : false;
+        filterParams.fenced_yard = req.body.fenced_yard == "Yes" ? true : false;
     }
-    if (req.body.pet_fenced_yard !== "") {
-        searchParams.pet_fenced_yard = req.body.pet_fenced_yard == "Yes" ? true : false;
+    if (req.body.age !== "") {
+        searchParams.pet_age = req.body.age;
+        filterParams.age = req.body.age;
     }
-    if (req.body.pet_age !== "") {
-        searchParams.pet_age = req.body.pet_age;
-    }
-    //console.log(searchParams);
+
     User.find(searchParams)
         .then(data => {
-            res.render('search/humans', {
-                'data': data,
-                searchParams: searchParams,
-                page: page
-            });
+            console.log("User Find results: " + data);
+            res.render('search/humans',
+                {
+                    'data': data,
+                    searchParams: filterParams,
+                    page: page
+                });
         });
 };
 
