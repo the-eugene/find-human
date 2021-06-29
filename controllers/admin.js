@@ -1,21 +1,25 @@
 const Pet = require('../models/pet');
+const { BreedsApi } = require('../services/pets');
 
 const { validationBulder } = require('../util/util');
 
-exports.getAddPet = (req, res, next) => {
+exports.getAddPet = async (req, res, next) => {
     const page = {
         title: "Pet Registration",
         path: "/admin/editRegistration",
         style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
+
+    const breeds = await BreedsApi.getDogBreeds();
+
     res.render('admin/editRegistration', {
         page,
         editing: false,
         hasError: false,
         errorMessage: null,
         validationErrors: [],
-        breeds: gBreeds,
+        breeds: breeds,
         pet: {},
         searchParams: { required: true }
     });
@@ -108,7 +112,7 @@ exports.postAddPet = (req, res, next) => {
         });
 };
 
-exports.getEditPet = (req, res, next) => {
+exports.getEditPet = async (req, res, next) => {
     const page = {
         title: "Edit Pet",
         path: "/admin/editRegistration",
@@ -121,6 +125,8 @@ exports.getEditPet = (req, res, next) => {
         return res.redirect('/');
     }
     const petId = req.params.petId;
+    const breeds = await BreedsApi.getDogBreeds();
+    
     Pet.findById(petId)
         .then(pet => {
             if (!pet) {
@@ -131,10 +137,11 @@ exports.getEditPet = (req, res, next) => {
                 page,
                 editing: editMode,
                 pet: pet,
-                breeds: gBreeds,
+                breeds: breeds,
                 hasError: false,
                 errorMessage: null,
-                validationErrors: []
+                validationErrors: [],
+                searchParams: {}
             });
         })
         .catch(err => {
