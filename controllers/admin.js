@@ -59,6 +59,15 @@ exports.postAddPet = (req, res, next) => {
     const specialNeeds = req.body.specialNeeds;
     const description = req.body.description;    
     const errors = validationBulder(req);
+    
+    const searchParams = { 
+        required: true,
+        breed: breed,
+        size: size,
+        gender: gender,
+        age: age
+    };
+
 
     const page = {
         title: "Pet Registration",
@@ -84,6 +93,7 @@ exports.postAddPet = (req, res, next) => {
                 description: description,
                 message: req.flash('message')
             },
+            searchParams: searchParams
         });
     }
 
@@ -141,7 +151,13 @@ exports.getEditPet = async (req, res, next) => {
                 hasError: false,
                 errorMessage: null,
                 validationErrors: [],
-                searchParams: {}
+                searchParams: {
+                    required: true,
+                    breed: pet.breed,
+                    size: pet.size,
+                    gender: pet.gender,
+                    age: pet.age
+                }
             });
         })
         .catch(err => {
@@ -161,6 +177,16 @@ exports.postEditPet = (req, res, next) => {
     const updatedAge = req.body.age;
     const updatedSpecialNeeds = req.body.specialNeeds;    
     const updatedDesc = req.body.description;
+
+    const searchParams = { 
+        required: true,
+        breed: updatedBreed,
+        size: updatedSize,
+        gender: updatedGender,
+        age: updatedAge
+    };
+
+    console.log(searchParams);
 
     const errors = validationBulder(req);
 
@@ -182,6 +208,7 @@ exports.postEditPet = (req, res, next) => {
                 description: updatedDesc,
                 _id: petId
             },
+            searchParams: searchParams
         });
     }
 
