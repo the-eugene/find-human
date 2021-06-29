@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 const _=require('lodash');
 const config=require('../config')
 
-const key = process.env.DOG_API_KEY;
-const url = `${process.env.DOG_API_URL}`;
+const key = config.dogApiKey;
+const url = `${config.dogApiUrl}`;
 
 class BreedsApi {
   constructor() {

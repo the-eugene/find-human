@@ -19,6 +19,6 @@ exports.port = process.env.PORT || 5000;
 
 exports.sendgridAPI = process.env.SENDGRID_API_KEY;
 
-exports.dogApiKey = process.env.DOG_API_KEY
+exports.dogApiKey = process.env.DOG_API_KEY;
 
 exports.dogApiUrl = "https://api.thedogapi.com/v1/"
