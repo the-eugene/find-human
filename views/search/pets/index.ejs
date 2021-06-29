@@ -68,7 +68,7 @@
       <% }); %>
     </div>
     <!-- for pagination -->
-    <%- include('../../includes/pagination.ejs'); %>
+    <%- include(__dirname+'/views/includes/pagination.ejs', {pageObject: pageObject}); %>
   </main>
 </body>
 

@@ -25,8 +25,8 @@ exports.getHumans = (req, res, next) => {
         .then(numberOfHuman => {
             totalHuman = numberOfHuman;
             return User.find({
-                lookingForPets: true
-            })
+                    lookingForPets: true
+                })
                 .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
                 .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
         })
@@ -35,12 +35,14 @@ exports.getHumans = (req, res, next) => {
                 'data': data,
                 page: page,
                 searchParams: {},
-                currentPage: currentPage,
-                hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
-                hasPreviousPage: currentPage > 1,
-                nextPage: currentPage + 1,
-                previousPage: currentPage - 1,
-                lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                }
             });
         });
 };
@@ -107,12 +109,14 @@ exports.getPets = async (req, res, next) => {
                 'data': data,
                 page: page,
                 searchParams: {},
-                currentPage: currentPage,
-                hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
-                hasPreviousPage: currentPage > 1,
-                nextPage: currentPage + 1,
-                previousPage: currentPage - 1,
-                lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                }
             });
         });
 };
