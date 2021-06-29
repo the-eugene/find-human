@@ -1,16 +1,6 @@
 const Pet = require('../models/pet');
-const { getDogBreeds } = require('../services/pets');
-const { getDogTemperaments } = require('../services/pets');
+
 const { validationBulder } = require('../util/util');
-
-let gBreeds = [];
-
-const getBreeds = () => {
-    getDogBreeds().then(breeds => {
-        gBreeds = ['', ...breeds];
-    });
-};
-getBreeds();
 
 exports.getAddPet = (req, res, next) => {
     const page = {

@@ -52,21 +52,6 @@ class BreedsApi {
 
 exports.BreedsApi = new BreedsApi();
 
-const getAllBreeds = async () =>{
-  console.log("getting breeds old");
-  return (await (
-    await fetch(`${url}/breeds?attach_breed=0`, {
-      method: "GET",
-      headers: {
-        "x-api-key": key
-      },
-    })
-  ).json());
-}
-
-// returns a list of all breed names
-exports.getDogBreeds = async () =>
-  (await getAllBreeds()).map(breed => breed.name);
 
 // returns a list of all breed_group names
 exports.getDogBreedGroups = async () =>
