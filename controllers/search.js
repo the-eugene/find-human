@@ -12,21 +12,33 @@ exports.getHumans = (req, res, next) => {
     const currentPage = +req.query.page || 1; // get the current page the user is viewing
     let totalHuman;
 
+     // if req.query.page == undefined, means the user clicks on "Find Pets" in the nav bar or the "Reset" button
+     if (req.query.page == undefined) {
+        // set the session to null 
+        req.session.humansSearchParams = null;
+    }
+
+    let searchParams;
+
+    // check whether req.session.searchParams is null or not
+    if (req.session.humansSearchParams == null || req.session.humansSearchParams == undefined) {
+        // set searchParams to empty when the page just gets loaded except that we still only want see humans who are looking for pets
+        searchParams = { lookingForPets: true };
+    } else {
+        searchParams = req.session.humansSearchParams;
+    }
+
     const page = {
         title: "Search Humans",
         path: "/search/humans",
         style: ["pretty", "search"]
     }
 
-    User.find({
-            lookingForPets: true
-        })
+    User.find(searchParams)
         .countDocuments()
         .then(numberOfHuman => {
             totalHuman = numberOfHuman;
-            return User.find({
-                lookingForPets: true
-            })
+            return User.find(searchParams)
                 .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
                 .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
         })
@@ -34,27 +46,36 @@ exports.getHumans = (req, res, next) => {
             res.render('search/humans', {
                 'data': data,
                 page: page,
-                searchParams: {},
-                currentPage: currentPage,
-                hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
-                hasPreviousPage: currentPage > 1,
-                nextPage: currentPage + 1,
-                previousPage: currentPage - 1,
-                lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                searchParams: searchParams,
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                }
             });
         });
 };
 
 exports.postHumans = (req, res, next) => {
+    const currentPage = 1; // always start with 1 after searching
+    let totalHuman;
+
     const page = {
         title: "Search Humans",
         path: "/search/humans",
         style: ["pretty", "search"]
     }
 
-    let searchParams = { lookingForPets: true }
-    let filterParams = { lookingForPets: true }
-    if (req.body.breed !== "") {        
+    let searchParams = {
+        lookingForPets: true
+    }
+    let filterParams = {
+        lookingForPets: true
+    }
+    if (req.body.breed !== "") {
         searchParams.pet_breed = req.body.breed;
         filterParams.breed = req.body.breed;
     }
@@ -80,20 +101,55 @@ exports.postHumans = (req, res, next) => {
     }
 
     User.find(searchParams)
+        .countDocuments()
+        .then(numberOfHuman => {
+            totalHuman = numberOfHuman;
+            return User.find(searchParams)
+                .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
+                .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
+        })
         .then(data => {
-            console.log("User Find results: " + data);
-            res.render('search/humans',
-                {
-                    'data': data,
-                    searchParams: filterParams,
-                    page: page
-                });
+            // console.log("User Find results: " + data);
+
+            req.session.humansSearchParams = searchParams;
+
+            res.render('search/humans', {
+                'data': data,
+                searchParams: searchParams,
+                page: page,
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalHuman,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                }
+            });
         });
 };
 
 exports.getPets = async (req, res, next) => {
-    const currentPage = +req.query.page || 1; // get the current page the user is viewing
+    const currentPage = +req.query.page || 1; // get the current page the user is viewing, set to 1 if it is undefined
     let totalPets;
+
+    // console.log("req.query.page: " + req.query.page);
+
+    // if req.query.page == undefined, means the user clicks on "Find Pets" in the nav bar or the "Reset" button
+    if (req.query.page == undefined) {
+        // set the session to null 
+        req.session.petsSearchParams = null;
+    }
+
+    let searchParams;
+
+    // check whether req.session.searchParams is null or not
+    if (req.session.petsSearchParams == null || req.session.petsSearchParams == undefined) {
+        // set searchParams to empty when the page just gets loaded 
+        searchParams = {};
+    } else {
+        searchParams = req.session.petsSearchParams;
+    }
 
     const page = {
         title: "Find Pets",
@@ -101,11 +157,11 @@ exports.getPets = async (req, res, next) => {
         style: ["pretty", "search"]
     }
 
-    Pet.find()
+    Pet.find(searchParams)
         .countDocuments()
         .then(numberOfPets => {
             totalPets = numberOfPets;
-            return Pet.find()
+            return Pet.find(searchParams)
                 .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
                 .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
         })
@@ -113,18 +169,23 @@ exports.getPets = async (req, res, next) => {
             res.render('search/pets', {
                 'data': data,
                 page: page,
-                searchParams: {},
-                currentPage: currentPage,
-                hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
-                hasPreviousPage: currentPage > 1,
-                nextPage: currentPage + 1,
-                previousPage: currentPage - 1,
-                lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                searchParams: searchParams,
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                }
             });
         });
 };
 
 exports.postPets = (req, res, next) => {
+    const currentPage = 1; // always start with 1 after searching
+    let totalPets;
+
     const page = {
         title: "Find Pets",
         path: "/search/pets",
@@ -148,13 +209,32 @@ exports.postPets = (req, res, next) => {
         searchParams.age = req.body.age;
     }
 
-    console.log(searchParams)
+    // console.log(searchParams);
+
     Pet.find(searchParams)
+        .countDocuments()
+        .then(numberOfPets => {
+            totalPets = numberOfPets;
+            return Pet.find(searchParams)
+                .skip((currentPage - 1) * NUMBER_PER_PAGE) // skip certain amount of pages for pagination
+                .limit(NUMBER_PER_PAGE) // limit the number of pets displaying on each page
+        })
         .then(data => {
+            // store the petsSearchParams into Session to make pagination work
+            req.session.petsSearchParams = searchParams;
+
             res.render('search/pets', {
                 'data': data,
                 page: page,
-                searchParams: searchParams
+                searchParams: searchParams,
+                pageObject: {
+                    currentPage: currentPage,
+                    hasNextPage: NUMBER_PER_PAGE * currentPage < totalPets,
+                    hasPreviousPage: currentPage > 1,
+                    nextPage: currentPage + 1,
+                    previousPage: currentPage - 1,
+                    lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                }
             });
         });
 };
