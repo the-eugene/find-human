@@ -1,17 +1,20 @@
 .card {
     box-shadow: 0 0 5px 3px lightgray;
     margin: 1rem;
-    display: grid;
+    height: 250px;
 }
 
 .card__content {
-    grid-column: 2;
+    padding-top: 3%;
+    padding-left: 3%;
 }
 
 .card__actions {
-    grid-column: 2;
-    margin-top: -56px;
-    display: block;
+    padding-left: 2%;
+}
+
+.card__image {
+    display: none;
 }
 
 .btn {
@@ -34,12 +37,8 @@ a.btn {
     padding: 0 45px;
 }
 
-.formTitle {
-    grid-column: 1/3;
-}
-
 img#imageDisplay {
-    width: 50%;
+    display: none;
 }
 
 select {
@@ -47,63 +46,161 @@ select {
     width: 252px;
 }
 
-.pet-form {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-
-.form-control.name {
-    grid-column: 1;
-}
-
-.form-control.imageUrl {
-    grid-column: 1;
-}
-
-.form-control.breed {
-    grid-column: 1;
-}
-
-.form-control.size {
-    grid-column: 1;
-}
-
-.form-control.temperament {
-    grid-column: 1;
-}
-
-.form-control.gender {
-    grid-column: 1;
-}
-
-.form-control.age {
-    grid-column: 1;
-}
-
-.form-control.specialNeeds {
-    grid-column: 1;
-}
-
-.form-control.description {
-    grid-column: 2;
-    grid-row:6/9;
-    width: 252px;
-}
-
 .imageDisplay {
-    grid-column: 2;
-    grid-row: 2/6;
+    grid-row: 2/5;
     width: 140%;
-    margin-left: 20%;
-}
-
-#specialNeeds {
-    width: 252px;
+    margin-left: 15%;
 }
 
 #addPet {
-    width: 66%;
-    height: 30%;
-    margin-left: 15%;
-    margin-top: 18%;
+    width: 29%;
+}
+
+.pet__description {
+    max-lines: 2;
+}
+
+#specialNeeds, #description {
+    width: 100%;
+}
+
+input,
+label {
+    display: block;
+}
+
+
+@media only screen and (min-width:801px) {
+
+    .card {
+        box-shadow: 0 0 5px 3px lightgray;
+        margin: 1rem;
+        display: grid;
+        grid-template-columns: 42% auto;
+        height: 250px;
+    }
+
+    .card__content {
+        grid-column: 2;
+        padding-top: 5%;
+    }
+
+    .card__actions {
+        grid-column: 2;
+        margin-top: -56px;
+        display: block;
+    }
+
+    .card__image {
+        display: inline-block;
+    }
+
+    .btn {
+        float: left;
+        display: block;
+        text-decoration: none;
+        padding: 5px;
+        font-size: 20px;
+        color: #2c0d05;
+        background-color: #fcdec8;
+        border: 1px solid #682514;
+        margin: 5px auto;
+        text-align: center;
+        border-radius: 5px;
+        margin: 5px 5px;
+        padding: 0 25px 0 25px;
+    }
+
+    a.btn {
+        padding: 0 45px;
+    }
+
+    .formTitle {
+        grid-column: 1/3;
+    }
+
+    img#imageDisplay {
+        display: inline-block;
+        width: 30%;
+        margin-left: 9%;
+    }
+
+    select {
+        height: 30px;
+        width: 252px;
+    }
+
+    .pet-form {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .form-control.name {
+        grid-column: 1;
+    }
+
+    .form-control.imageUrl {
+        grid-column: 1;
+    }
+
+    .form-control.breed {
+        grid-column: 1;
+    }
+
+    .form-control.size {
+        grid-column: 1;
+    }
+
+    .form-control.temperament {
+        grid-column: 1;
+    }
+
+    .form-control.gender {
+        grid-column: 1;
+    }
+
+    .form-control.age {
+        grid-column: 1;
+    }
+
+    .form-control.specialNeeds {
+        grid-column: 1;
+    }
+
+    .form-control.description {
+        grid-column: 2;
+        grid-row: 5/10;
+        margin-top: 1%;
+        width: 80%;
+    }
+
+    .imageDisplay {
+        grid-column: 2;
+        grid-row: 2/5;
+        width: 140%;
+        margin-left: 15%;
+    }
+
+    #specialNeeds {
+        width: 252px;
+    }
+
+    #addPet {
+        width: 66%;
+        margin-left: 67%;
+        margin-top: 6%;
+    }
+
+    .card__image {
+        padding: 9%;
+    }
+
+    #description {
+        width: 100%;
+    }
+
+    input,
+    label {
+        display: block;
+    }
 }
