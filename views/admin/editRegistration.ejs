@@ -63,7 +63,7 @@
             <div class="form-control specialNeeds">
                 <label for="specialNeeds">Special Needs</label>
                 <textarea 
-                    class="<%= validationErrors.find(e => e.param === 'specialNeeds') ? 'invalid' : '' %>" required
+                    class="<%= validationErrors.find(e => e.param === 'specialNeeds') ? 'invalid' : '' %>" 
                     name="specialNeeds" id="specialNeeds" 
                     rows="5"><% if (editing || hasError) { %><%= pet.specialNeeds %><% } %></textarea>
             </div>       
