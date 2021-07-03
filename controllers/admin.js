@@ -50,14 +50,7 @@ exports.getPets = (req, res, next) => {
 };
 
 exports.postAddPet = (req, res, next) => {
-    const imageUrl = req.body.imageUrl;
-    const name = req.body.name;
-    const breed = req.body.breed;
-    const size = req.body.size;
-    const gender = req.body.gender;
-    const age = req.body.age;
-    const specialNeeds = req.body.specialNeeds;
-    const description = req.body.description;    
+    const { imageUrl, name, breed, size, gender, age, specialNeeds, description } = req.body;  
     const errors = validationBulder(req);
     
     const searchParams = { 
@@ -67,7 +60,6 @@ exports.postAddPet = (req, res, next) => {
         gender: gender,
         age: age
     };
-
 
     const page = {
         title: "Pet Registration",
@@ -113,7 +105,31 @@ exports.postAddPet = (req, res, next) => {
         .save()
         .then(result => {
             console.log('Created Pet');
+
+            let imageFile;
+            let uploadPath;
+
+            if (!req.files || Object.keys(req.files).length === 0) {
+                console.log('no files were uploaded');
+                return res.redirect('/admin/pets');
+            }
+
+            // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+            imageFile = req.files.imageFile;
+            uploadPath = __dirname + '/public/images/' + imageFile.name;
+            console.log('upload path', __dirname + '/public/images/' + imageFile.name);
+            console.log('created pet result', result);
+
+            // Use the mv() method to place the file somewhere on your server
+            imageFile.mv(uploadPath, (err) => {
+                if (err)
+                return res.status(500).send(err);
+
+                res.send('File uploaded!');
+            });
+
             res.redirect('/admin/pets');
+            
         })
         .catch(err => {
             const error = new Error(err);

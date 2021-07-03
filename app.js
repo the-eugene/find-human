@@ -4,6 +4,10 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const {getDogTemperaments, BreedsApi} = require('./services/pets');
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
+const upload = multer();
+
 
 const User = require('./models/user');
 
@@ -44,6 +48,8 @@ function setupApp(app) {
   app
     .set('view engine', 'ejs')
     .use(express.static(path.join(__dirname, 'public')))
+    // .use(upload.array())
+    .use(upload.array('imageFile'))
     .use(express.urlencoded({extended: true})) //instead of body parser
     //set up sessions and session db storage.
     .use(
@@ -57,6 +63,7 @@ function setupApp(app) {
     .use(require('csurf')())
     .use(require('cors')(config.corsOptions))
     .use(require('connect-flash')())
+    .use(fileUpload())
 
     .use(async (req, res, next) => { 
       res.locals.__dirname=__dirname;     
