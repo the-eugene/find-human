@@ -18,46 +18,38 @@
     <%- include('../includes/nav.ejs'); %>
     <main>
         <%- include('../includes/message.ejs'); %>
-        <form class="login-form" action="/signup" method="POST">
+        <form class="login-form" action="/editUser" method="POST">
             <div class="formline">
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" value="<%=page.data.name%>">
+                <input type="text" name="name" id="name" value="<%=page.user.name%>">
             </div>
-            <div class="formline">
+            <!-- <div class="formline">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="<%=page.data.email%>">
-            </div>
-            <div class="formline">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-            </div>
-            <div class="formline">
-                <label for="confirmedPassword">Confirmed Password</label>
-                <input type="password" name="confirmedPassword" id="confirmedPassword">
-            </div>
+                <input type="email" name="email" id="email" value="<%=page.user.email%>">
+            </div> -->
             <div>
                 <label for="lookingForPets">Looking for Pet(s)?</label>
-                <input type="checkbox" onclick="petDetails()" id="lookingForPets" name="lookingForPets" value=false>
+                <input type="checkbox" onclick="petDetails()" id="lookingForPets" name="lookingForPets" value=<%= page.user.lookingForPets %> <%= page.user.lookingForPets == true ? 'checked' : '' %>> 
             </div>
-            <div id="petQuestions" style="display:none">
-                <div class="form-control breed">               
-                    <%- include('../includes/controls/breed_select.ejs'); %>
+            <div id="petQuestions" style=<%= page.user.lookingForPets == true ? "display:block" : "display:none" %>>
+                <div class="form-control breed">
+                    <%- include('../includes/controls/breed_select.ejs', {searchParams: searchParams}); %>
                 </div>
     
                 <div class="form-control size">
-                    <%- include('../includes/controls/size_select.ejs'); %>
+                    <%- include('../includes/controls/size_select.ejs', {searchParams: searchParams}); %>
                 </div>
     
                 <div class="form-control gender">
-                    <%- include('../includes/controls/gender_select.ejs'); %>
+                    <%- include('../includes/controls/gender_select.ejs', {searchParams: searchParams}); %>
                 </div>
     
                 <div class="form-control age">
-                    <%- include('../includes/controls/age_select.ejs'); %>
+                    <%- include('../includes/controls/age_select.ejs', {searchParams: searchParams}); %>
                 </div>
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="button" type="submit">Sign Up</button>
+            <button class="button" type="submit">Update</button>
         </form>
     </main>
 

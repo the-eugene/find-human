@@ -15,11 +15,11 @@ const User = new Schema({
     type: String,
     required: true
   },
-  level: {
-    type: Number,
-    required: true,
-    default: 1
-  },
+  // level: {
+  //   type: Number,
+  //   required: true,
+  //   default: 1
+  // },
   lookingForPets: {
     type: Boolean,
     required: false
@@ -32,14 +32,14 @@ const User = new Schema({
     type: String,
     required: false
   },
-  pet_activity_level: {
-    type: String,
-    required: false
-  },
-  pet_fenced_yard: {
-    type: Boolean,
-    required: false
-  },
+  // pet_activity_level: {
+  //   type: String,
+  //   required: false
+  // },
+  // pet_fenced_yard: {
+  //   type: Boolean,
+  //   required: false
+  // },
   pet_gender: {
     type: String,
     required: false

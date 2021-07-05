@@ -25,7 +25,8 @@ var path=page.path||path||'/';
         </ul>
     </nav>
     <div class="auth">
-        <% if(userLevel > 0) {%> 
+        <% if(userLevel > 0) {%>
+            <a href="/editUser">Edit User</a> 
             <form action="/logout" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit">Log Out</button>
