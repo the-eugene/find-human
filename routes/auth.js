@@ -32,5 +32,9 @@ router.post('/signup',[
     })
 ], authController.postSignup);
 
+router.get('/editUser', authController.getEditForm);
+
+router.post('/editUser', authController.postEditForm)
+
 router.all('/logout', authController.logout);
 module.exports = router;
