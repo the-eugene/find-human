@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../../includes/head.ejs'); %>
-
 <body>
 <%- include('../../includes/nav.ejs'); %>
 <main>
@@ -10,10 +9,7 @@
         <h1>
             <%= breedInfo.name %>
         </h1>
-        <div class="img-container">
-            <% if (src) { %>
-                <img src="<%= src %>">
-            <% } %>
+        <div class="img-container" id="breed-image">
         </div>
         <div class="grid">
             <div class="stack">
@@ -75,12 +71,22 @@
                 </div>
             </div>
         </div>
-
+        <input id="breed-id" type="hidden" value="<%= breedInfo.reference_image_id %>">
         <div class="footer-container">
             <a class="button" href="/search/pets">Go back</a>
         </div>
     </div>
 </main>
+<script>
+  const fetchBreedImage = async () => {
+    const {value: breedId} = document.getElementById("breed-id");
+    if (breedId) {
+      const {src} = await (await fetch(`/search/breeds/${breedId}`)).json();
+      document.getElementById("breed-image").innerHTML = `<img src="${src}">`;
+    }
+  }
+  document.onload = fetchBreedImage();
+</script>
 </body>
 
 </html>

@@ -150,7 +150,7 @@ function renderSignup(req, res, data = {
     email: ''
 }) {
     const searchParams = {
-        required: true
+        required: false
     };
     const page = {
         title: "Sign Up",

@@ -16,12 +16,6 @@
           <%- include('../includes/controls/size_select.ejs'); %>   
         </div>
         <div class="filter">
-          <%- include('../includes/controls/activityLevel_select.ejs'); %> 
-        </div>
-        <div class="filter">
-          <%- include('../includes/controls/fencedYard_select.ejs'); %>
-        </div>
-        <div class="filter">
           <%- include('../includes/controls/gender_select.ejs'); %>
         </div>
         <div class="filter">
@@ -35,7 +29,7 @@
       </form>
     </section>
     <div class="twocol">
-      <% data.forEach(user=>{ %>
+      <% data && data.forEach(user=>{ %>
       <article class="card simple">
         
         <h2><%=user.name%></h2>
@@ -48,23 +42,12 @@
           <span><%= user.pet_gender %></span>
           <span class="label">Size</span>
           <span><%= user.pet_size %></span>
-          <span class="label">Activity Level</span>
-          <span><%= user.pet_activity_level %></span>
-          <span class="label">Fenced Yard</span>
-          <span><% if(user.pet_fenced_yard) { %> Yes <% } else { %> No <% } %></span>
+          <span class="label">Email</span>
+          <span><a href = "mailto:<%= user.email %>"><%=user.email%></a></span>
         </section>
-        <div class="actions">
-          <a class="button" href="book">Details</a>
-          <% if(userLevel>0) { %>
-          <form action="/cart" method="post">
-            <button class="button" type="submit">Add to Cart</button>
-            <input type="hidden" name="isbn" value="<%=  %>">
-            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-          </form>
-          <% } %>
-        </div>
       </article>
       <% }); %>
+      <%= !data || !data.length ? "No results found." : "" %>
     </div>
     <!-- for pagination -->
     <%- include(__dirname+'/views/includes/pagination.ejs', {pageObject: pageObject}); %>
