@@ -7,7 +7,7 @@
   <main>
     <%- include('../includes/message.ejs'); %>
 
-    <section class="search">
+    <div class="search">
       <form action="/search/humans" method="POST">
         <div class="filter">         
           <%- include(__dirname+'/views/includes/controls/breed_select.ejs'); %>         
@@ -27,13 +27,13 @@
           <input type="hidden" name="_csrf" value="<%=csrfToken%>">
         </div>
       </form>
-    </section>
+    </div>
     <div class="twocol">
       <% data && data.forEach(user=>{ %>
       <article class="card simple">
         
         <h2><%=user.name%></h2>
-        <section class="details">
+        <div class="details">
           <span class="label">Breed</span>
           <span><%= user.pet_breed %></span>
           <span class="label">Age</span>
@@ -43,10 +43,12 @@
           <span class="label">Size</span>
           <span><%= user.pet_size %></span>
           <%- include(__dirname+'/views/includes/email_button.ejs', {sendTo: user._id})%>
-        </section>
+        </div>
       </article>
       <% }); %>
-      <%= !data || !data.length ? "No results found." : "" %>
+      <% if(!data || !data.length) {%> 
+        <h3>No results found.</h3>
+      <% } %>
     </div>
     <!-- for pagination -->
     <%- include(__dirname+'/views/includes/pagination.ejs', {pageObject: pageObject}); %>

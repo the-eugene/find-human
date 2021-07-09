@@ -8,11 +8,11 @@
     <form method="post" action="/email">
         <div class="formline">
             <label for="mailsubject">Subject</label>
-            <input type="Text" name="mailsubject" value="">
+            <input type="Text" name="mailsubject" id="mailsubject" value="">
         </div>
         <div class="formline">
             <label for="mailmessage">Message</label>
-            <textarea name="mailmessage" rows="5"></textarea>
+            <textarea name="mailmessage" id="mailmessage" rows="5"></textarea>
         </div>
         <input type="hidden" name="mailto" value="<%= mailto %>">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

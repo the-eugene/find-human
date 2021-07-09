@@ -62,7 +62,7 @@ select {
 }
 
 .pet__description {
-    max-lines: 2;
+    height: 2rem;
 }
 
 #specialNeeds, #description {

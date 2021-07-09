@@ -7,6 +7,7 @@ const {getDogTemperaments, BreedsApi} = require('./services/pets');
 const fileUpload = require('express-fileupload');
 const multer = require('multer');
 const upload = multer();
+const htmlEncode = require('node-htmlencode');
 
 
 const User = require('./models/user');
@@ -68,7 +69,8 @@ function setupApp(app) {
     .use(async (req, res, next) => { 
       res.locals.__dirname=__dirname;     
       res.locals.dogBreeds = await BreedsApi.getDogBreeds();
-      res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();      
+      res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();    
+      res.locals.htmlEncode = htmlEncode;  
 
         if(req.session.user){
             try{

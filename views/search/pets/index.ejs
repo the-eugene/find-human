@@ -6,7 +6,7 @@
   <%- include('../../includes/nav.ejs'); %>
   <main>
     <%- include('../../includes/message.ejs'); %>
-    <section class="search">
+    <div class="search">
       <form action="/search/pets" method="POST">
         <div class="filter">
           <%- include('../../includes/controls/breed_select.ejs'); %>
@@ -29,16 +29,16 @@
           <input type="hidden" name="_csrf" value="<%=csrfToken%>">
         </div>
       </form>
-    </section>
+    </div>
 
     <div class="twocol">
       <% data && data.forEach(pet => { %>
         <%- include(__dirname+'/views/includes/pet_card.ejs', {pet: pet})%>
-      <% }) %>
-        <h3>
-          <%= !data ? "No pets were found with the information you searched for." : "" %>
-        </h3>
+      <% }) %>       
     </div>
+    <% if(data.length === 0)  { %> 
+      <h3>No pets were found with the information you searched for.</h3>
+    <% } %>
     <!-- for pagination -->
     <%- include(__dirname+'/views/includes/pagination.ejs', {pageObject: pageObject}); %>
   </main>
