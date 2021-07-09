@@ -32,9 +32,12 @@
     </section>
 
     <div class="twocol">
-      <% data.forEach(pet=>{ %>
+      <% data && data.forEach(pet => { %>
         <%- include(__dirname+'/views/includes/pet_card.ejs', {pet: pet})%>
-      <% }); %>
+      <% }) %>
+        <h3>
+          <%= !data ? "No pets were found with the information you searched for." : "" %>
+        </h3>
     </div>
     <!-- for pagination -->
     <%- include(__dirname+'/views/includes/pagination.ejs', {pageObject: pageObject}); %>

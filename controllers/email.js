@@ -9,7 +9,8 @@ exports.sendEmail = async (req, res, next)=>{
     if(userTo!=null){
         var msg={
             to:         userTo.email,
-            from:       req.user.email,
+            from:       'wil20121@byui.edu', //req.user.email, //does not work, sender emails have to be certified
+            'reply-to':   req.user.email,
             subject:    req.body.mailsubject,
             text:       req.body.mailmessage
         };
