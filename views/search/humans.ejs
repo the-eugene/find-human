@@ -42,8 +42,7 @@
           <span><%= user.pet_gender %></span>
           <span class="label">Size</span>
           <span><%= user.pet_size %></span>
-          <span class="label">Email</span>
-          <span><a href = "mailto:<%= user.email %>"><%=user.email%></a></span>
+          <%- include(__dirname+'/views/includes/email_button.ejs', {sendTo: user._id})%>
         </section>
       </article>
       <% }); %>
