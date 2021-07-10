@@ -49,6 +49,7 @@ nav a, div.auth a, div.auth button{
   border: 1px solid #2c0d05;
   border-radius: 5px;
   transition: background-color .5s;
+  font-size: 16px;
 }
 
 nav a:hover, div.auth a:hover, div.auth button:hover{
