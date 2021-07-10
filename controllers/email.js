@@ -3,8 +3,14 @@ const User=require('../models/user');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+const { validationBulder } = require('../util/util');
+
+
 exports.sendEmail = async (req, res, next)=>{
     console.log("Email Form Submitted")
+    const errors = validationBulder(req);
+    if(errors.length==0)
+        {
     var userTo=await User.findById(req.body.mailto);
     if(userTo!=null){
         var msg={
@@ -23,7 +29,19 @@ exports.sendEmail = async (req, res, next)=>{
             req.flash('message', {class:'error',text:'Message Not Sent'});
         }
     } else {req.flash('message', {class:'error',text:'No destination'});}
+    
     res.redirect('/');
+    } else {
+        const page={
+            title:"Send a Message",
+            path: "/email",
+            style:["pretty","form"],
+            message: req.flash('message')
+        }
+    
+        res.render('email/form.ejs',{page:page, mailto:req.params.userid})
+    }
+
 }
 
 exports.mailForm=(req, res, next)=>{
