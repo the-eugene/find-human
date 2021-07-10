@@ -1,6 +1,6 @@
 const Pet = require('../models/pet');
 const { BreedsApi } = require('../services/pets');
-
+const { validationResult } = require('express-validator');
 const { validationBulder } = require('../util/util');
 
 exports.getAddPet = async (req, res, next) => {
@@ -27,6 +27,7 @@ exports.getAddPet = async (req, res, next) => {
 
 exports.getPets = (req, res, next) => {
     const page = {
+        title: "My Pets",
         style: ["pretty", "form", "pets"],
         message: req.flash('message')
     }
@@ -38,7 +39,7 @@ exports.getPets = (req, res, next) => {
             res.render('admin/edit-pet', {
                 page,
                 pets: pets,
-                pageTitle: 'pets',
+                title: 'pets',
                 path: '/admin/edit-pet'
             });
         })
@@ -70,10 +71,12 @@ exports.postAddPet = (req, res, next) => {
 
     if (errors.length != 0) {
         console.log(errors);
-        return res.status(422).render('admin/edit-pet', {
+        return res.status(422).render('admin/editRegistration', {
             page,
             editing: false,
             hasError: true,
+            errorMessage: errors[0],
+            validationErrors: [],
             pet: {
                 imageUrl: imageUrl,
                 name: name,
@@ -110,7 +113,7 @@ exports.postAddPet = (req, res, next) => {
             let uploadPath;
 
             if (!req.files || Object.keys(req.files).length === 0) {
-                console.log('no files were uploaded');
+                // console.log('no files were uploaded');
                 return res.redirect('/admin/pets');
             }
 
@@ -183,7 +186,7 @@ exports.getEditPet = async (req, res, next) => {
         });
 };
 
-exports.postEditPet = (req, res, next) => {
+exports.postEditPet = async (req, res, next) => {
     const petId = req.body.petId;
     const updatedImageUrl = req.body.imageUrl;
     const updatedname = req.body.name;
@@ -193,6 +196,13 @@ exports.postEditPet = (req, res, next) => {
     const updatedAge = req.body.age;
     const updatedSpecialNeeds = req.body.specialNeeds;    
     const updatedDesc = req.body.description;
+    
+    const page = {
+        title: "Edit Pet",
+        path: "/admin/editRegistration",
+        style: ["pretty", "form", "pets"],
+        message: req.flash('message')
+    }
 
     const searchParams = { 
         required: true,
@@ -207,26 +217,45 @@ exports.postEditPet = (req, res, next) => {
     const errors = validationBulder(req);
 
     if (errors.length != 0) {
-        return res.status(422).render('admin/edit-pet', {
-            page,
-            pageTitle: 'Edit Pet',
-            path: '/admin/edit-pet',
-            editing: true,
-            hasError: true,
-            pet: {
-                imageUrl: updatedImageUrl,
-                name: updatedname,
-                breed: updatedBreed,
-                size: updatedSize,
-                gender: updatedGender,
-                age: updatedAge,
-                specialNeeds: updatedSpecialNeeds,                
-                description: updatedDesc,
-                _id: petId
-            },
-            searchParams: searchParams
-        });
-    }
+        const page = {
+            title: "Edit Pet",
+            path: "/admin/editRegistration",
+            style: ["pretty", "form", "pets"],
+            message: req.flash('message')
+        }
+        const breeds = await BreedsApi.getDogBreeds();
+        
+        Pet.findById(petId)
+            .then(pet => {
+                if (!pet) {
+                    return res.redirect('/');
+                }
+                console.log(pet);
+                res.render('admin/editRegistration', {
+                    page,
+                    editing: true,
+                    pet: pet,
+                    breeds: breeds,
+                    hasError: false,
+                    errorMessage: null,
+                    validationErrors: [],
+                    searchParams: {
+                        required: true,
+                        breed: pet.breed,
+                        size: pet.size,
+                        gender: pet.gender,
+                        age: pet.age,
+
+                    }
+                });
+            })
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
+    } else {
+
 
     Pet.findById(petId)
         .then(pet => {
@@ -252,7 +281,7 @@ exports.postEditPet = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-};
+}};
 
 exports.postDeletePet = (req, res, next) => {
     const petId = req.body.petId;

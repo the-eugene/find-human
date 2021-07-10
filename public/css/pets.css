@@ -86,7 +86,7 @@ input:invalid {
         margin: 1rem;
         display: grid;
         grid-template-columns: 42% auto;
-        height: 250px;
+        height: 315px;
     }
 
     .card__content {
@@ -96,8 +96,7 @@ input:invalid {
 
     .card__actions {
         grid-column: 2;
-        margin-top: -56px;
-        display: block;
+        grid-row: 2;
     }
 
     .card__image {
@@ -201,7 +200,8 @@ input:invalid {
     }
 
     .card__image {
-        padding: 9%;
+        padding-top: 9%;
+        padding-left: 16%;
     }
 
     #description {
