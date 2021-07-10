@@ -16,9 +16,9 @@ routeTable(app);
 mongoose.connect(config.mongoURI, config.mongooseOptions).then(() => {
   console.log('Connected to DB');
 
-  //load books from json file if no books found.
-  require('./models/book').findOne().then(book => {
-    book || require('./models/product_old').loadLibrary('60a5cb2bd1efd43eb8e90a1f');
+  //load pet from json file if no pets found.
+  require('./models/pet').findOne().then(pet => {
+    pet || require('./models/product_old').loadLibrary('60a5cb2bd1efd43eb8e90a1f');
   });
 
   app.listen(config.port);
@@ -68,7 +68,7 @@ function setupApp(app) {
     .use(async (req, res, next) => { 
       res.locals.__dirname=__dirname;     
       res.locals.dogBreeds = await BreedsApi.getDogBreeds();
-      res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();      
+      res.locals.dogTemperaments = await BreedsApi.getDogTemperaments();    
 
         if(req.session.user){
             try{

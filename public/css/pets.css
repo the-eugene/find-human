@@ -17,6 +17,11 @@
     display: none;
 }
 
+.card__image img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
 .btn {
     float: left;
     display: block;
@@ -57,7 +62,7 @@ select {
 }
 
 .pet__description {
-    max-lines: 2;
+    height: 2rem;
 }
 
 #specialNeeds, #description {
