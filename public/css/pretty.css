@@ -85,6 +85,16 @@ main {
   text-align: center;
 }
 
+#navLogout {
+  font-size: 16px;
+}
+
+#editUserButton {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  margin: 0px;
+}
+
 table {
     width: 100%;
     border: 1px solid #846c8f;

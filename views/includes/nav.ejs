@@ -11,24 +11,29 @@ var path=page.path||path||'/';
 %>
 
 <header class="main-header">
+
     <nav>
         <ul class="nav_menu">
             <% navmenu.filter(item=>{
-                return !item.level||item.level<=userLevel;
-            }).forEach(item=>{ %>
-                <li><a class="navi<%=item.link===path?' active':''%>" href="<%= item.link %>"><%= item.name %></a></li><% }); %>
+                    return !item.level||item.level<=userLevel;
+                }).forEach(item=>{ %>
+            <li><a class="navi<%=item.link===path?' active':''%>" href="<%= item.link %>"><%= item.name %></a></li>
+            <% }); %>
         </ul>
     </nav>
+
     <div class="auth">
         <% if(userLevel > 0) {%>
-            <a href="/editUser">Edit User</a> 
-            <form action="/logout" method="post">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Log Out</button>
-            </form>
+        
+        <a href="/editUser" id="editUserButton">Edit User</a>
+
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" id="navLogout">Log Out</button>
+        </form>
         <%} else {%>
-            <a href="/signup">Sign Up</a>
-            <a href="/login">Log In</a>
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Log In</a>
         <%}%>
     </div>
 </header>
