@@ -1,15 +1,10 @@
 <% 
 const navmenu = [
     {'name': 'Home', 'link': '/'},
-//    {'name': 'Products', 'link': '/products'},
-//    {'name': 'Cart', 'link': '/cart',level:1},
-//    {'name': 'Orders', 'link': '/orders',level:1},
-//    {'name': 'Add Product', 'link': '/admin/add-book',level:1},
     {'name': 'Add Pet', 'link': '/admin/add-pet',level:1},
     {'name': 'My Pets', 'link': '/admin/pets',level:1},
     {'name': 'Find Humans', 'link': '/search/humans'},
     {'name': 'Find Pets', 'link': '/search/pets'}
-//    {'name': 'Admin Products', 'link': '/admin/products',level:1}
 ];
 
 var path=page.path||path||'/';
@@ -26,10 +21,10 @@ var path=page.path||path||'/';
     </nav>
     <div class="auth">
         <% if(userLevel > 0) {%>
-            <a href="/editUser">Edit User</a> 
+            <a href="/editUser" class="navi"> Edit User</a> 
             <form action="/logout" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Log Out</button>
+                <button type="submit" class="navi">Log Out</button>
             </form>
         <%} else {%>
             <a href="/signup">Sign Up</a>

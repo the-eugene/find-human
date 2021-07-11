@@ -12,7 +12,7 @@
         </h1>
         <div class="img-container">
             <% if (dog && dog.imageUrl) { %>
-                <img src="<%= dog.imageUrl %>">
+                <img src="<%= dog.imageUrl %>" alt="A <%= dog.breed %> named <%= dog.name %>">
             <% } %>
         </div>
         <div class="grid">

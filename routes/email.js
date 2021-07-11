@@ -4,8 +4,8 @@ const mail = require('../controllers/email');
 
 const validEmail=[
     body('mailsubject').trim().notEmpty().withMessage("A subject is required"),
-    body('mailmessage').trim().notEmpty().withMessage("A message is required"),
-    body('mailurl').trim().isURL()
+    body('mailmessage').trim().notEmpty().withMessage("A message is required")
+    //body('mailurl').trim().isURL()
 ]
 
 //for now all admin functions require just user access

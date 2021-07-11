@@ -1,10 +1,10 @@
     <article class="card simple">
       <h2><%=pet.name%></h2>
-      <img src="<%= pet.imageUrl %>">
-      <section class="details">
+      <img src="<%= pet.imageUrl %>" alt="A <%= pet.breed %> named <%= pet.name %>">
+      <div class="details">
         <span class="label">Breed</span>
         <span>
-          <a href="/search/pets/details/<%= pet.breed %>"><%= pet.breed %></a>
+          <a href="/search/pets/details/<%= encodeURI(pet.breed) %>"><%= pet.breed %></a>
         </span>
         <span class="label">Age</span>
         <span><%= pet.age %></span>
@@ -12,7 +12,7 @@
         <span><%= pet.gender %></span>
         <span class="label">Size</span>
         <span><%= pet.size %></span>
-      </section>
+      </div>
       <div class="actions">
         <a class="button" href="/search/pets/<%= pet._id %>">More info</a>
        <%- include(__dirname+'/views/includes/email_button.ejs', {sendTo: pet.ownerId})%>

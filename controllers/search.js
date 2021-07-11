@@ -60,7 +60,7 @@ exports.getHumans = (req, res, next) => {
                     hasPreviousPage: currentPage > 1,
                     nextPage: currentPage + 1,
                     previousPage: currentPage - 1,
-                    lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                    lastPage: totalHuman === 0 ? 1 : Math.ceil(totalHuman / NUMBER_PER_PAGE)
                 }
             });
         });
@@ -119,7 +119,7 @@ exports.postHumans = (req, res, next) => {
                     hasPreviousPage: currentPage > 1,
                     nextPage: currentPage + 1,
                     previousPage: currentPage - 1,
-                    lastPage: Math.ceil(totalHuman / NUMBER_PER_PAGE)
+                    lastPage: totalHuman === 0 ? 1 : Math.ceil(totalHuman / NUMBER_PER_PAGE)
                 }
             });
         });
@@ -173,7 +173,7 @@ exports.getPets = async (req, res, next) => {
                     hasPreviousPage: currentPage > 1,
                     nextPage: currentPage + 1,
                     previousPage: currentPage - 1,
-                    lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                    lastPage: totalPets === 0 ? 1 : Math.ceil(totalPets / NUMBER_PER_PAGE)
                 }
             });
         });
@@ -225,7 +225,7 @@ exports.postPets = async (req, res, next) => {
                     hasPreviousPage: currentPage > 1,
                     nextPage: currentPage + 1,
                     previousPage: currentPage - 1,
-                    lastPage: Math.ceil(totalPets / NUMBER_PER_PAGE)
+                    lastPage: totalPets === 0 ? 1 : Math.ceil(totalPets / NUMBER_PER_PAGE)
                 }
             });
         });
