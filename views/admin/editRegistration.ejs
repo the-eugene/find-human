@@ -6,9 +6,7 @@
    <%- include('../includes/nav.ejs') %>
 
     <main>
-        <% if (errorMessage) { %>
-            <div class="user-message user-message--error"><%= errorMessage %></div>
-        <% } %>
+        <%- include('../includes/message.ejs'); %>
         <form class="pet-form" 
             action="/admin/<% if (editing) { %>edit-pet<% } else { %>add-pet<% } %>?_csrf=<%=csrfToken%>" 
             method="POST" 
